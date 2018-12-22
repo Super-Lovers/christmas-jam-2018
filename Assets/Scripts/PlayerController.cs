@@ -12,13 +12,19 @@ public class PlayerController : MonoBehaviour {
     private SpriteRenderer _spriteRenderer;
     public Sprite DefaultSprite;
     public Sprite DamagedSprite;
+    public GameObject Sword;
     private bool _canShoot = true;
+    private bool _canUseMelee = true;
+    private Animator _animator;
 
     public GameObject SnowBall;
 
-    void Start() {
+    void Start()
+    {
+        Sword.SetActive(false);
         _rigidbody2d = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
     }
 
     void Update() {
@@ -61,6 +67,16 @@ public class PlayerController : MonoBehaviour {
             {
                 _rigidbody2d.AddForce(new Vector2(0, verticalMovement * CharacterSpeed));
             }
+
+            if (_canUseMelee && Input.GetKeyDown(KeyCode.Space))
+            {
+                Sword.SetActive(true);
+                Sword.GetComponent<BoxCollider2D>().enabled = true;
+
+                Invoke("EnableHittingMelee", 0.2f);
+
+                _canUseMelee = false;
+            }
         }
     }
 
@@ -73,7 +89,6 @@ public class PlayerController : MonoBehaviour {
     {
         for (int i = 0; i < 3; i++)
         {
-            // Color32 uses hexadecimals instead of rgba
             _spriteRenderer.sprite = DamagedSprite;
             yield return new WaitForSeconds(0.1f);
             _spriteRenderer.sprite = DefaultSprite;
@@ -83,7 +98,9 @@ public class PlayerController : MonoBehaviour {
 
     public void DamagePlayer()
     {
-        StartCoroutine(FlashPlayer());
+        //StartCoroutine(FlashPlayer());
+        _animator.SetBool("isPlayerHit", true);
+        Invoke("StopPlayerHitAnimation", 1f);
         CharacterHitPoints--;
 
         // Game over condition
@@ -91,6 +108,11 @@ public class PlayerController : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+    }
+
+    private void StopPlayerHitAnimation()
+    {
+        _animator.SetBool("isPlayerHit", false);
     }
 
     public void UpdatePlayerPerspective()
@@ -105,5 +127,12 @@ public class PlayerController : MonoBehaviour {
             PlayerMode = "Flying";
             transform.SetPositionAndRotation(transform.position, new Quaternion(0, 0, 0, 0));
         }
+    }
+
+    private void EnableHittingMelee()
+    {
+        _canUseMelee = true;
+        Sword.GetComponent<BoxCollider2D>().enabled = false;
+        Sword.SetActive(false);
     }
 }

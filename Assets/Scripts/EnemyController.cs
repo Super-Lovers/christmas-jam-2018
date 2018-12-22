@@ -7,7 +7,7 @@ public class EnemyController : MonoBehaviour {
     [Range(0, 10)]
     public float EnemySpeed = 5f;
     [Range(0, 1)]
-    public float EnemyRunningSpeed = 0.3f;
+    public float EnemyRunningSpeed = 0.03f;
     public GameObject Snowball;
     public Sprite DefaultSprite;
     public Sprite DamagedSprite;
@@ -15,16 +15,18 @@ public class EnemyController : MonoBehaviour {
 
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigidbody2d;
-    private bool _isFlickerComplete = true;
     private bool _canPickNewDirection = true;
     private bool _goLeft = false;
     private bool _canShoot = true;
     private GameObject _player;
+    private Animator _animator;
+    private bool _canHitPlayer = true;
 
     void Start () {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody2d = GetComponent<Rigidbody2D>();
         _player = GameObject.FindGameObjectWithTag("Player");
+        _animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -109,7 +111,6 @@ public class EnemyController : MonoBehaviour {
     {
         for (int i = 0; i < 3; i++)
         {
-            // Color32 uses hexadecimals instead of rgba
             _spriteRenderer.sprite = DamagedSprite;
             yield return new WaitForSeconds(0.1f);
             _spriteRenderer.sprite = DefaultSprite;
@@ -119,10 +120,10 @@ public class EnemyController : MonoBehaviour {
 
     public void DamageEnemy()
     {
-        StartCoroutine(FlashEnemy());
+        _animator.SetBool("isEnemyHit", true);
         EnemyHitPoints--;
 
-        if (EnemyHitPoints <= 0 && _isFlickerComplete)
+        if (EnemyHitPoints <= 0)
         {
             // Once all opponents are defeated, the next wave
             // can commence (and the break between each wave).
@@ -152,5 +153,48 @@ public class EnemyController : MonoBehaviour {
             }
             Destroy(gameObject);
         }
+
+        Invoke("StopDamageAnimation", 1f);
+    }
+
+    private void StopDamageAnimation()
+    {
+        _animator.SetBool("isEnemyHit", false);
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.transform.CompareTag("Player"))
+        {
+            _animator.SetBool("isAttacking", true);
+            if (_canHitPlayer)
+            {
+                _player.GetComponent<PlayerController>().DamagePlayer();
+
+                _canHitPlayer = false;
+                Invoke("EnableHittingPlayer", 1f);
+            }
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.transform.CompareTag("Player"))
+        {
+            _animator.SetBool("isAttacking", false);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.CompareTag("Sword"))
+        {
+            DamageEnemy();
+        }
+    }
+
+    private void EnableHittingPlayer()
+    {
+        _canHitPlayer = true;
     }
 }

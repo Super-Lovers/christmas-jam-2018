@@ -16,6 +16,11 @@ public class CutscenesManager : MonoBehaviour {
     private int _currentDialogueIndex;
     public static bool IsCutsceneOver = true;
 
+    // This is used for toggling the background effects once
+    // the first stage is complete
+    public GameObject _cloudsContainer;
+    public GameObject _backgroundManager;
+
     private void Start()
     {
         _animator = _fadeTransitioner.GetComponent<Animator>();
@@ -80,6 +85,9 @@ public class CutscenesManager : MonoBehaviour {
     {
         yield return new WaitForSeconds(1f);
 
+        _cloudsContainer.SetActive(false);
+        _backgroundManager.SetActive(false);
+        
         _player.GetComponent<PlayerController>().UpdatePlayerPerspective();
 
         previousLevel.SetActive(false);

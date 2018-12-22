@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212768232814016976}
   - component: {fileID: 50921098858391860}
   - component: {fileID: 61221520698442544}
+  - component: {fileID: 95362910162318454}
   - component: {fileID: 114563430735483560}
   m_Layer: 0
   m_Name: Elf With Reindeer
@@ -88,6 +89,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.85, y: 1.6}
   m_EdgeRadius: 0
+--- !u!95 &95362910162318454
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1671212142702434}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4bdbbd02c5addfa4ba412be4c3ffdfe8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114563430735483560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,8 +120,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyHitPoints: 1
   EnemySpeed: 10
-  EnemyRunningSpeed: 0.2
-  Snowball: {fileID: 1743203678070892, guid: fa502cd1b61408f449e5f26b63316e97, type: 2}
+  EnemyRunningSpeed: 0.03
+  Snowball: {fileID: 1867837802800302, guid: 41a7e2feb601ab444aa4f96f92f3200e, type: 2}
   DefaultSprite: {fileID: 21300000, guid: 5eb8b9a70a1db924eb60770285d76dba, type: 3}
   DamagedSprite: {fileID: 21300000, guid: c1b5a3b71b0088c4eb5e71ed2178c932, type: 3}
   PlayerLayerMask:
