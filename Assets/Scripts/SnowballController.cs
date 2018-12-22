@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class SnowballController : MonoBehaviour {
     public int SnowballPower = 1;
-    [Range(0, 1)]
-    public float SnowballSpeed = 0.3f;
-    private Rigidbody _rigidbody;
+    [Range(0, 100)]
+    public float SnowballSpeed = 55f;
+    private Rigidbody2D _rigidbody2d;
 
 	void Start() {
-        _rigidbody = GetComponent<Rigidbody>();
+        _rigidbody2d = GetComponent<Rigidbody2D>();
 
         // After a few seconds from spawning, the snowball will be destroyed
         // from the game to save performance
@@ -18,18 +18,16 @@ public class SnowballController : MonoBehaviour {
 
     private void Update()
     {
-        Vector3 currentPosition = transform.position;
         if (transform.CompareTag("Enemy Snowball"))
         {
-            currentPosition.y -= SnowballSpeed;
+            _rigidbody2d.AddForce(new Vector2(0, -SnowballSpeed));
         } else if (transform.CompareTag("Player Snowball"))
         {
-            currentPosition.y += SnowballSpeed;
+            _rigidbody2d.AddForce(new Vector2(0, SnowballSpeed));
         }
-        transform.position = currentPosition;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (transform.CompareTag("Player Snowball") &&
             other.transform.CompareTag("Enemy"))

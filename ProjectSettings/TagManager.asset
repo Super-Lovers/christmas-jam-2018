@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Player Snowball
   - Enemy Snowball
+  - Fade Transitioner
   layers:
   - Default
   - TransparentFX

@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour {
     public int EnemyHitPoints = 3;
-    [Range(0, 1)]
-    public float EnemySpeed = 0.05f;
+    [Range(0, 10)]
+    public float EnemySpeed = 5f;
     public GameObject Snowball;
+    public Sprite DefaultSprite;
+    public Sprite DamagedSprite;
 
-    private MeshRenderer _meshRenderer;
+    private SpriteRenderer _spriteRenderer;
+    private Rigidbody2D _rigidbody2d;
     private Vector3 _startPosition;
     private bool _isFlickerComplete = true;
     private bool _canPickNewDirection = true;
@@ -16,7 +19,8 @@ public class EnemyController : MonoBehaviour {
     private bool _canShoot = true;
 
 	void Start () {
-        _meshRenderer = GetComponent<MeshRenderer>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _rigidbody2d = GetComponent<Rigidbody2D>();
         _startPosition = transform.position;
 	}
 
@@ -43,7 +47,7 @@ public class EnemyController : MonoBehaviour {
             }
 
             _canPickNewDirection = false;
-            Invoke("EnablePickingDirection", 0.5f);
+            Invoke("EnablePickingDirection", Random.Range(0.5f, 0.8f));
         }
 
         Vector3 currentPosition = transform.position;
@@ -51,23 +55,22 @@ public class EnemyController : MonoBehaviour {
         {
             if (currentPosition.x > -5)
             {
-                currentPosition.x -= EnemySpeed;
+                _rigidbody2d.AddForce(new Vector2(-EnemySpeed, 0));
             } else
             {
-                currentPosition.x += EnemySpeed;
+                _rigidbody2d.AddForce(new Vector2(EnemySpeed, 0));
             }
         } else
         {
             if (currentPosition.x < 5)
             {
-                currentPosition.x += EnemySpeed;
+                _rigidbody2d.AddForce(new Vector2(EnemySpeed, 0));
             }
             else
             {
-                currentPosition.x -= EnemySpeed;
+                _rigidbody2d.AddForce(new Vector2(-EnemySpeed, 0));
             }
         }
-        transform.position = currentPosition;
     }
 
     private void EnableShooting()
@@ -85,9 +88,9 @@ public class EnemyController : MonoBehaviour {
         for (int i = 0; i < 3; i++)
         {
             // Color32 uses hexadecimals instead of rgba
-            _meshRenderer.material.color = new Color32(0xFF, 0x00, 0x00, 0x00);
+            _spriteRenderer.sprite = DamagedSprite;
             yield return new WaitForSeconds(0.1f);
-            _meshRenderer.material.color = new Color32(0xFF, 0xFF, 0xFF, 0x00);
+            _spriteRenderer.sprite = DefaultSprite;
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -105,6 +108,25 @@ public class EnemyController : MonoBehaviour {
             {
                 StageController.IsEnemyDefeated = true;
                 StageController.CurrentWave++;
+
+                if (StageController.CurrentWave >= 4)
+                {
+                    StageController.CurrentStage++;
+                    StageController.CurrentWave = 1;
+
+                    CutscenesManager.IsCutsceneOver = false;
+
+                    if (StageController.CurrentStage == 2)
+                    {
+                        CutscenesManager.Stage = "Stage 2";
+                    } else if (StageController.CurrentStage == 3)
+                    {
+                        CutscenesManager.Stage = "Stage 3";
+                    }
+
+                    GameObject.Find("Cutscenes Manager")
+                        .GetComponent<CutscenesManager>().FadeIn();
+                }
             }
             Destroy(gameObject);
         }

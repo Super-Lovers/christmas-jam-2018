@@ -24,10 +24,16 @@ public class StageController : MonoBehaviour {
 
     private void Update()
     {
-        if (IsEnemyDefeated)
+        // We must only go over waves that exist [1-3]
+        if (CurrentStage == 1 && IsEnemyDefeated && CurrentWave < 4)
         {
             StartNewWave();
             IsEnemyDefeated = false;
+        }
+
+        if (CurrentStage == 2 && IsEnemyDefeated && CurrentWave < 4)
+        {
+            StageText.text = "Stage " + CurrentStage + "-" + CurrentWave;
         }
     }
 

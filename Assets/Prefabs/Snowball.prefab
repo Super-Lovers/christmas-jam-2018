@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4496088311714764}
   - component: {fileID: 33304290730760534}
   - component: {fileID: 23918324756389214}
-  - component: {fileID: 54776048375361078}
-  - component: {fileID: 135081946144416312}
+  - component: {fileID: 50551432600129338}
+  - component: {fileID: 58053716843284996}
   - component: {fileID: 114737553851662562}
   m_Layer: 0
   m_Name: Snowball
@@ -86,21 +86,41 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1743203678070892}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54776048375361078
-Rigidbody:
+--- !u!50 &50551432600129338
+Rigidbody2D:
+  serializedVersion: 4
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1743203678070892}
-  serializedVersion: 2
-  m_Mass: 0.1
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 0
-  m_IsKinematic: 0
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 10
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_Constraints: 0
+  m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!58 &58053716843284996
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1743203678070892}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!114 &114737553851662562
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -113,16 +133,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SnowballPower: 1
-  SnowballSpeed: 0.166
---- !u!135 &135081946144416312
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1743203678070892}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.8
-  m_Center: {x: 0, y: 0, z: 0}
+  SnowballSpeed: 55
