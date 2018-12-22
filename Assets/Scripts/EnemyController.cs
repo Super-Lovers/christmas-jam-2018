@@ -6,69 +6,91 @@ public class EnemyController : MonoBehaviour {
     public int EnemyHitPoints = 3;
     [Range(0, 10)]
     public float EnemySpeed = 5f;
+    [Range(0, 1)]
+    public float EnemyRunningSpeed = 0.3f;
     public GameObject Snowball;
     public Sprite DefaultSprite;
     public Sprite DamagedSprite;
+    public LayerMask PlayerLayerMask;
 
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigidbody2d;
-    private Vector3 _startPosition;
     private bool _isFlickerComplete = true;
     private bool _canPickNewDirection = true;
     private bool _goLeft = false;
     private bool _canShoot = true;
+    private GameObject _player;
 
-	void Start () {
+    void Start () {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody2d = GetComponent<Rigidbody2D>();
-        _startPosition = transform.position;
-	}
+        _player = GameObject.FindGameObjectWithTag("Player");
+    }
 
     private void Update()
     {
-        if (_canShoot)
+        if (StageController.CurrentStage == 1)
         {
-            GameObject snowball = Instantiate(Snowball,
-                transform.position, Quaternion.identity);
-            snowball.tag = "Enemy Snowball";
-
-            _canShoot = false;
-            Invoke("EnableShooting", 1f);
-        }
-
-        if (_canPickNewDirection)
-        {
-            if (Random.Range(0, 101) > 50)
+            if (_canShoot)
             {
-                _goLeft = true;
-            } else
-            {
-                _goLeft = false;
+                GameObject snowball = Instantiate(Snowball,
+                    transform.position, Quaternion.identity);
+                snowball.tag = "Enemy Snowball";
+
+                _canShoot = false;
+                Invoke("EnableShooting", 1f);
             }
 
-            _canPickNewDirection = false;
-            Invoke("EnablePickingDirection", Random.Range(0.5f, 0.8f));
-        }
+            if (_canPickNewDirection)
+            {
+                if (Random.Range(0, 101) > 50)
+                {
+                    _goLeft = true;
+                }
+                else
+                {
+                    _goLeft = false;
+                }
 
-        Vector3 currentPosition = transform.position;
-        if (_goLeft)
-        {
-            if (currentPosition.x > -5)
-            {
-                _rigidbody2d.AddForce(new Vector2(-EnemySpeed, 0));
-            } else
-            {
-                _rigidbody2d.AddForce(new Vector2(EnemySpeed, 0));
+                _canPickNewDirection = false;
+                Invoke("EnablePickingDirection", Random.Range(0.5f, 0.8f));
             }
-        } else
-        {
-            if (currentPosition.x < 5)
+
+            Vector3 currentPosition = transform.position;
+            if (_goLeft)
             {
-                _rigidbody2d.AddForce(new Vector2(EnemySpeed, 0));
+                if (currentPosition.x > -5)
+                {
+                    _rigidbody2d.AddForce(new Vector2(-EnemySpeed, 0));
+                }
+                else
+                {
+                    _rigidbody2d.AddForce(new Vector2(EnemySpeed, 0));
+                }
             }
             else
             {
-                _rigidbody2d.AddForce(new Vector2(-EnemySpeed, 0));
+                if (currentPosition.x < 5)
+                {
+                    _rigidbody2d.AddForce(new Vector2(EnemySpeed, 0));
+                }
+                else
+                {
+                    _rigidbody2d.AddForce(new Vector2(-EnemySpeed, 0));
+                }
+            }
+        } else if (StageController.CurrentStage == 2)
+        {
+            if (Vector2.Distance(transform.position, _player.transform.position) < 5)
+            {
+                Vector2 direction = ((Vector2)transform.forward -
+                    (Vector2)_player.transform.position).normalized;
+
+                transform.up = direction;
+
+                transform.position = 
+                    Vector2.MoveTowards(transform.position,
+                    _player.transform.position, EnemyRunningSpeed);
             }
         }
     }

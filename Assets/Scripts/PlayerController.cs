@@ -61,14 +61,6 @@ public class PlayerController : MonoBehaviour {
             {
                 _rigidbody2d.AddForce(new Vector2(0, verticalMovement * CharacterSpeed));
             }
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                // Depending on the tag assigned to the snowball, different
-                // code blocks will be responsible for different colliding objects
-                GameObject snowball = Instantiate(SnowBall, transform.position, Quaternion.identity);
-                snowball.tag = "Player Snowball";
-            }
         }
     }
 

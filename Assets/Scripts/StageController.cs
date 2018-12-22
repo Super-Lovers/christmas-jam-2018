@@ -7,9 +7,14 @@ public class StageController : MonoBehaviour {
     public Text StageText;
     public GameObject WaveNotification;
     public int SecondsBetweenWaves;
-    public GameObject[] Wave1;
-    public GameObject[] Wave2;
-    public GameObject[] Wave3;
+    public string StageOne = "This is the first stages' waves";
+    public GameObject[] Wave1_1;
+    public GameObject[] Wave1_2;
+    public GameObject[] Wave1_3;
+    public string StageTwo = "This is the second stages' waves";
+    public GameObject[] Wave2_1;
+    public GameObject[] Wave2_2;
+    public GameObject[] Wave2_3;
     public static int CurrentStage = 1;
     public static int CurrentWave = 1;
     public static bool IsEnemyDefeated = false;
@@ -33,6 +38,8 @@ public class StageController : MonoBehaviour {
 
         if (CurrentStage == 2 && IsEnemyDefeated && CurrentWave < 4)
         {
+            StartNewWave();
+            IsEnemyDefeated = false;
             StageText.text = "Stage " + CurrentStage + "-" + CurrentWave;
         }
     }
@@ -68,11 +75,22 @@ public class StageController : MonoBehaviour {
 
     private void PickNewWave()
     {
-        switch (CurrentWave)
+        if (StageController.CurrentStage == 1)
         {
-            case 1: SpawnNewWave(Wave1); break;
-            case 2: SpawnNewWave(Wave2); break;
-            case 3: SpawnNewWave(Wave3); break;
+            switch (CurrentWave)
+            {
+                case 1: SpawnNewWave(Wave1_1); break;
+                case 2: SpawnNewWave(Wave1_2); break;
+                case 3: SpawnNewWave(Wave1_3); break;
+            }
+        } else if (StageController.CurrentStage == 2)
+        {
+            switch (CurrentWave)
+            {
+                case 1: SpawnNewWave(Wave2_1); break;
+                case 2: SpawnNewWave(Wave2_2); break;
+                case 3: SpawnNewWave(Wave2_3); break;
+            }
         }
 
         StageText.text = "Stage " + CurrentStage + "-" + CurrentWave; 
