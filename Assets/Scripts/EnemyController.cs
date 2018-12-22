@@ -85,10 +85,9 @@ public class EnemyController : MonoBehaviour {
         {
             if (Vector2.Distance(transform.position, _player.transform.position) < 5)
             {
-                Vector2 direction = ((Vector2)transform.forward -
-                    (Vector2)_player.transform.position).normalized;
-
-                transform.up = direction;
+                Vector3 dir = _player.transform.position - transform.position;
+                float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
                 transform.position = 
                     Vector2.MoveTowards(transform.position,
@@ -138,16 +137,18 @@ public class EnemyController : MonoBehaviour {
                     StageController.CurrentWave = 1;
 
                     CutscenesManager.IsCutsceneOver = false;
+                    CutscenesManager.CurrentDialogueIndex = 0;
 
                     if (StageController.CurrentStage == 2)
                     {
                         CutscenesManager.Stage = "Stage 2";
-                    } else if (StageController.CurrentStage == 3)
+                    }
+                    else if (StageController.CurrentStage == 3)
                     {
                         CutscenesManager.Stage = "Stage 3";
                     }
 
-                    GameObject.Find("Cutscenes Manager")
+                        GameObject.Find("Cutscenes Manager")
                         .GetComponent<CutscenesManager>().FadeIn();
                 }
             }

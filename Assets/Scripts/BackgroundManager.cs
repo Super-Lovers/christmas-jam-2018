@@ -3,23 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BackgroundManager : MonoBehaviour {
-    public GameObject[] clouds;
+    public GameObject[] Clouds;
     private GameObject _cloudsContainer;
+    public GameObject Ground;
+    public GameObject[] Environment;
+    private GameObject _environmentContainer;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         _cloudsContainer = GameObject.Find("Clouds");
+        _environmentContainer = GameObject.Find("Environmentals");
 
         InvokeRepeating("SpawnCloud", 1f, 1.5f);
+
+        InvokeRepeating("SpawnEnvironmental", 1f, 20f);
+        InvokeRepeating("SpawnEnvironmental", 1f, 20f);
+        InvokeRepeating("SpawnEnvironmental", 1f, 20f);
+        InvokeRepeating("SpawnEnvironmental", 1f, 20f);
+        InvokeRepeating("SpawnEnvironmental", 1f, 20f);
     }
 	
     private void SpawnCloud()
     {
-        Vector2 newCloudPosition = new Vector2(Random.Range(-5, 5), 7);
+        Vector2 newPosition = new Vector2(Random.Range(-5, 5), 7);
 
         GameObject newCloud = Instantiate(
-            clouds[Random.Range(0, clouds.Length)],
-            newCloudPosition, Quaternion.identity,
+            Clouds[Random.Range(0, Clouds.Length)],
+            newPosition, Quaternion.identity,
             _cloudsContainer.transform);
+    }
+
+    private void SpawnEnvironmental()
+    {
+        Vector2 newPosition = new Vector2(Random.Range(-5, 5), Random.Range(7, 10));
+
+        GameObject newEnvironmental = Instantiate(
+            Environment[Random.Range(0, Environment.Length)],
+            newPosition, Quaternion.identity,
+            _environmentContainer.transform);
     }
 }

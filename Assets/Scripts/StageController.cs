@@ -15,6 +15,10 @@ public class StageController : MonoBehaviour {
     public GameObject[] Wave2_1;
     public GameObject[] Wave2_2;
     public GameObject[] Wave2_3;
+    public string StageThree = "This is the last stages' waves";
+    public GameObject[] Wave3_1;
+    public GameObject[] Wave3_2;
+    public GameObject[] Wave3_3;
     public static int CurrentStage = 1;
     public static int CurrentWave = 1;
     public static bool IsEnemyDefeated = false;
@@ -36,11 +40,20 @@ public class StageController : MonoBehaviour {
             IsEnemyDefeated = false;
         }
 
-        if (CurrentStage == 2 && IsEnemyDefeated && CurrentWave < 4)
+        if (CurrentStage == 2 && IsEnemyDefeated && CurrentWave < 4 &&
+            CutscenesManager.IsCutsceneOver)
         {
             StartNewWave();
             IsEnemyDefeated = false;
             StageText.text = "Stage " + CurrentStage + "-" + CurrentWave;
+        }
+
+        if (CurrentStage == 3 && IsEnemyDefeated && CurrentWave < 2 &&
+            CutscenesManager.IsCutsceneOver)
+        {
+            StartNewWave();
+            IsEnemyDefeated = false;
+            StageText.text = "Last Stage";
         }
     }
 
@@ -83,6 +96,8 @@ public class StageController : MonoBehaviour {
                 case 2: SpawnNewWave(Wave1_2); break;
                 case 3: SpawnNewWave(Wave1_3); break;
             }
+
+            StageText.text = "Stage " + CurrentStage + "-" + CurrentWave;
         } else if (StageController.CurrentStage == 2)
         {
             switch (CurrentWave)
@@ -91,9 +106,16 @@ public class StageController : MonoBehaviour {
                 case 2: SpawnNewWave(Wave2_2); break;
                 case 3: SpawnNewWave(Wave2_3); break;
             }
-        }
 
-        StageText.text = "Stage " + CurrentStage + "-" + CurrentWave; 
+            StageText.text = "Stage " + CurrentStage + "-" + CurrentWave;
+        }
+        else if (StageController.CurrentStage == 3)
+        {
+            switch (CurrentWave)
+            {
+                case 1: SpawnNewWave(Wave3_1); break;
+            }
+        }
     }
 
     private void SpawnNewWave(GameObject[] wave)

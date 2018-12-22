@@ -1,9 +1,9 @@
 fileFormatVersion: 2
-guid: a46ba35f9ae0d1a45bd89b9cb94b0240
+guid: e699cf0c8fc4fd9448aa4212efcbf10a
 TextureImporter:
   fileIDToRecycleName:
-    21300000: gnomeDamagedAnimation_0
-    21300002: gnomeDamagedAnimation_1
+    21300000: elfDamaged_0
+    21300002: elfDamaged_1
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -108,13 +108,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: gnomeDamagedAnimation_0
+      name: elfDamaged_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 85
-        height: 160
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -122,19 +122,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4fa0e3fe51334b842ac7a0d048b6df5a
+      spriteID: 4c9e2a9a3f19b154b9cef432069e922e
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gnomeDamagedAnimation_1
+      name: elfDamaged_1
       rect:
         serializedVersion: 2
         x: 85
         y: 0
         width: 85
-        height: 160
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -142,7 +142,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: df0dd831cc271fa46ab4b1de83c5ecf6
+      spriteID: dae4f3547cc9e2046b1227db0178d815
       vertices: []
       indices: 
       edges: []
@@ -150,7 +150,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 56768d6ecf7b66945a8270f64f975c39
+    spriteID: 61af70fe8f335c4438f420367df5c187
     vertices: []
     indices: 
     edges: []

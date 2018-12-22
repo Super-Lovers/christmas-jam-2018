@@ -11,15 +11,18 @@ public class CutscenesManager : MonoBehaviour {
     private GameObject _player;
     public GameObject StageOneLevel;
     public GameObject StageTwoLevel;
+    public GameObject StageThreeLevel;
 
     public string[] StageTwoDialogue;
-    private int _currentDialogueIndex;
+    public string[] StageThreeDialogue;
+    public static int CurrentDialogueIndex;
     public static bool IsCutsceneOver = true;
 
     // This is used for toggling the background effects once
     // the first stage is complete
-    public GameObject _cloudsContainer;
-    public GameObject _backgroundManager;
+    public GameObject CloudsContainer;
+    public GameObject GroundContainer;
+    public GameObject BackgroundManager;
 
     private void Start()
     {
@@ -31,15 +34,32 @@ public class CutscenesManager : MonoBehaviour {
     {
         if (IsCutsceneOver == false && Input.GetKeyDown(KeyCode.Space))
         {
-            if (_currentDialogueIndex == StageTwoDialogue.Length)
+            if (Stage == "Stage 2")
             {
-                FadeOut();
-            } else
-            {
-                _fadeTransitioner.GetComponentInChildren<Text>().text =
-                    StageTwoDialogue[_currentDialogueIndex];
+                if (CurrentDialogueIndex == StageTwoDialogue.Length)
+                {
+                    FadeOut();
+                }
+                else
+                {
+                    _fadeTransitioner.GetComponentInChildren<Text>().text =
+                        StageTwoDialogue[CurrentDialogueIndex];
 
-                _currentDialogueIndex++;
+                    CurrentDialogueIndex++;
+                }
+            } else if (Stage == "Stage 3")
+            {
+                if (CurrentDialogueIndex == StageThreeDialogue.Length)
+                {
+                    FadeOut();
+                }
+                else
+                {
+                    _fadeTransitioner.GetComponentInChildren<Text>().text =
+                        StageThreeDialogue[CurrentDialogueIndex];
+
+                    CurrentDialogueIndex++;
+                }
             }
         }
     }
@@ -50,16 +70,16 @@ public class CutscenesManager : MonoBehaviour {
 
         if (Stage == "Stage 1")
         {
-            _fadeTransitioner.GetComponentInChildren<Text>().text = "Skyscraping";
+            _fadeTransitioner.GetComponentInChildren<Text>().text = "Stage 1";
         } else if (Stage == "Stage 2")
         {
-            _fadeTransitioner.GetComponentInChildren<Text>().text = "Progress";
-
+            _fadeTransitioner.GetComponentInChildren<Text>().text = "Stage 2";
             StartCoroutine(ChangeLevel(StageOneLevel, StageTwoLevel));
         }
         else if (Stage == "Stage 3")
         {
-            _fadeTransitioner.GetComponentInChildren<Text>().text = "Challenger";
+            _fadeTransitioner.GetComponentInChildren<Text>().text = "Stage 3";
+            StartCoroutine(ChangeLevel(StageTwoLevel, StageThreeLevel));
         }
 
         _animator.SetBool("HideTransition", false);
@@ -85,8 +105,9 @@ public class CutscenesManager : MonoBehaviour {
     {
         yield return new WaitForSeconds(1f);
 
-        _cloudsContainer.SetActive(false);
-        _backgroundManager.SetActive(false);
+        CloudsContainer.SetActive(false);
+        GroundContainer.SetActive(false);
+        BackgroundManager.SetActive(false);
         
         _player.GetComponent<PlayerController>().UpdatePlayerPerspective();
 
