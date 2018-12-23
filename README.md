@@ -4,12 +4,16 @@ This game was made for the Christmas Game Jam 2018 in two days. It is about the 
 ![Imgur](https://i.imgur.com/zqpv2jk.png)
 
 Controls:
+
 [WSAD] or Arrow keys for movement.
 Left mouse button to use your weapons.
 
 Credits:
+
 Game Artist - Roger Recaldini
+
 Game Designer and Artist - Youri Mulder
+
 Game Developer - Nikolay Ivanov
 
 Kenney assets for the presents scattered in the second stage:
