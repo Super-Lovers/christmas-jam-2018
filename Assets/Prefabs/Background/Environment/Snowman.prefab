@@ -21,8 +21,9 @@ GameObject:
   - component: {fileID: 4616482408849692}
   - component: {fileID: 212874000742448732}
   - component: {fileID: 50299390093701970}
+  - component: {fileID: 61691132356534390}
   - component: {fileID: 247359193410581494}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Snowman
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,6 +63,31 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!61 &61691132356534390
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1511984308767188}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.21, y: 0.21}
+    newSize: {x: 0.21, y: 0.21}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.21, y: 0.21}
+  m_EdgeRadius: 0
 --- !u!212 &212874000742448732
 SpriteRenderer:
   m_ObjectHideFlags: 1

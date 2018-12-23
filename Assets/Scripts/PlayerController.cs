@@ -10,12 +10,13 @@ public class PlayerController : MonoBehaviour {
     
     private Rigidbody2D _rigidbody2d;
     private SpriteRenderer _spriteRenderer;
-    public Sprite DefaultSprite;
+    public Sprite PlayerMeleeSprite;
     public Sprite DamagedSprite;
     public GameObject Sword;
     private bool _canShoot = true;
     private bool _canUseMelee = true;
     private Animator _animator;
+    public RuntimeAnimatorController _animatorMelee;
 
     public GameObject SnowBall;
 
@@ -49,6 +50,12 @@ public class PlayerController : MonoBehaviour {
             }
         } else if (PlayerMode == "Grounded")
         {
+            // This lets us update the player's animations using
+            // the new stage's player sprites and animator and
+            // then we adjust the collider for those new sprites as well.
+            _animator.runtimeAnimatorController = _animatorMelee;
+            GetComponent<BoxCollider2D>().size = new Vector2(0.5f, 0.5f);
+
             Vector3 newCameraPosition = MainCamera.transform.position;
             newCameraPosition.x = transform.position.x;
             newCameraPosition.y = transform.position.y;
@@ -59,23 +66,26 @@ public class PlayerController : MonoBehaviour {
 
             transform.up = direction;
 
-            if (horizontalMovement != 0)
+            if (CutscenesManager.IsCutsceneOver)
             {
-                _rigidbody2d.AddForce(new Vector2(horizontalMovement * CharacterSpeed, 0));
-            }
-            if (verticalMovement != 0)
-            {
-                _rigidbody2d.AddForce(new Vector2(0, verticalMovement * CharacterSpeed));
-            }
+                if (horizontalMovement != 0)
+                {
+                    _rigidbody2d.AddForce(new Vector2(horizontalMovement * CharacterSpeed, 0));
+                }
+                if (verticalMovement != 0)
+                {
+                    _rigidbody2d.AddForce(new Vector2(0, verticalMovement * CharacterSpeed));
+                }
 
-            if (_canUseMelee && Input.GetKeyDown(KeyCode.Space))
-            {
-                Sword.SetActive(true);
-                Sword.GetComponent<BoxCollider2D>().enabled = true;
+                if (_canUseMelee && Input.GetKeyDown(KeyCode.Space))
+                {
+                    Sword.SetActive(true);
+                    Sword.GetComponent<BoxCollider2D>().enabled = true;
 
-                Invoke("EnableHittingMelee", 0.2f);
+                    Invoke("EnableHittingMelee", 0.1f);
 
-                _canUseMelee = false;
+                    _canUseMelee = false;
+                }
             }
         }
     }
@@ -85,7 +95,7 @@ public class PlayerController : MonoBehaviour {
         _canShoot = true;
     }
 
-    private IEnumerator FlashPlayer()
+   /* private IEnumerator FlashPlayer()
     {
         for (int i = 0; i < 3; i++)
         {
@@ -94,7 +104,7 @@ public class PlayerController : MonoBehaviour {
             _spriteRenderer.sprite = DefaultSprite;
             yield return new WaitForSeconds(0.1f);
         }
-    }
+    }*/
 
     public void DamagePlayer()
     {

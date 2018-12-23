@@ -9,9 +9,10 @@ public class EnemyController : MonoBehaviour {
     [Range(0, 1)]
     public float EnemyRunningSpeed = 0.03f;
     public GameObject Snowball;
-    public Sprite DefaultSprite;
+    public Sprite EnemyMeleeSprite;
     public Sprite DamagedSprite;
     public LayerMask PlayerLayerMask;
+    public RuntimeAnimatorController _animatorMelee;
 
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigidbody2d;
@@ -21,12 +22,32 @@ public class EnemyController : MonoBehaviour {
     private GameObject _player;
     private Animator _animator;
     private bool _canHitPlayer = true;
+    private ConstantForce2D _constantForce2D;
 
     void Start () {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody2d = GetComponent<Rigidbody2D>();
         _player = GameObject.FindGameObjectWithTag("Player");
         _animator = GetComponent<Animator>();
+        _constantForce2D = GetComponent<ConstantForce2D>();
+
+        if (StageController.CurrentStage == 1)
+        {
+            Invoke("StopConstantForce", 4f);
+        } else if (StageController.CurrentStage == 2 ||
+            StageController.CurrentStage == 3)
+        {
+            StopConstantForce();
+        }
+    }
+
+    // This stops the enemy cart from getting closer a few
+    // seconds after it spawns.
+    private void StopConstantForce()
+    {
+        Vector2 newForce = _constantForce2D.force;
+        newForce.y = 0;
+        _constantForce2D.force = newForce;
     }
 
     private void Update()
@@ -83,6 +104,9 @@ public class EnemyController : MonoBehaviour {
             }
         } else if (StageController.CurrentStage == 2)
         {
+            _animator.runtimeAnimatorController = _animatorMelee;
+            GetComponent<BoxCollider2D>().size = new Vector2(0.5f, 0.5f);
+
             if (Vector2.Distance(transform.position, _player.transform.position) < 5)
             {
                 Vector3 dir = _player.transform.position - transform.position;
@@ -106,7 +130,7 @@ public class EnemyController : MonoBehaviour {
         _canPickNewDirection = true;
     }
 
-    private IEnumerator FlashEnemy()
+    /*private IEnumerator FlashEnemy()
     {
         for (int i = 0; i < 3; i++)
         {
@@ -115,7 +139,7 @@ public class EnemyController : MonoBehaviour {
             _spriteRenderer.sprite = DefaultSprite;
             yield return new WaitForSeconds(0.1f);
         }
-    }
+    }*/
 
     public void DamageEnemy()
     {
@@ -124,10 +148,12 @@ public class EnemyController : MonoBehaviour {
 
         if (EnemyHitPoints <= 0)
         {
+            Debug.Log(GameObject.FindGameObjectsWithTag("Enemy").Length);
             // Once all opponents are defeated, the next wave
             // can commence (and the break between each wave).
             if (GameObject.FindGameObjectsWithTag("Enemy").Length <= 1)
             {
+
                 StageController.IsEnemyDefeated = true;
                 StageController.CurrentWave++;
 

@@ -21,6 +21,7 @@ public class BackgroundManager : MonoBehaviour {
         InvokeRepeating("SpawnEnvironmental", 1f, 20f);
         InvokeRepeating("SpawnEnvironmental", 1f, 20f);
         InvokeRepeating("SpawnEnvironmental", 1f, 20f);
+        InvokeRepeating("SpawnEnvironmental", 1f, 20f);
     }
 	
     private void SpawnCloud()
@@ -41,5 +42,8 @@ public class BackgroundManager : MonoBehaviour {
             Environment[Random.Range(0, Environment.Length)],
             newPosition, Quaternion.identity,
             _environmentContainer.transform);
+
+        Physics2D.IgnoreLayerCollision(9, 8);
+        Physics2D.IgnoreLayerCollision(9, 10);
     }
 }

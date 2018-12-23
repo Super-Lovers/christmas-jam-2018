@@ -21,8 +21,9 @@ GameObject:
   - component: {fileID: 4574949139560490}
   - component: {fileID: 212946170983363264}
   - component: {fileID: 50454154442048220}
+  - component: {fileID: 61879295116291906}
   - component: {fileID: 247163987631954516}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bush Three
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,6 +63,31 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!61 &61879295116291906
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1619797937777338}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.19, y: 0.26}
+    newSize: {x: 0.19, y: 0.26}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.19, y: 0.26}
+  m_EdgeRadius: 0
 --- !u!212 &212946170983363264
 SpriteRenderer:
   m_ObjectHideFlags: 1
