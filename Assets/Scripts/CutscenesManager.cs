@@ -115,7 +115,7 @@ public class CutscenesManager : MonoBehaviour {
 
             _newPlayerPosition = StageTwoLevel.transform.position;
 
-            _fadeTransitioner.GetComponentInChildren<Text>().text = "Stage 2";
+            _fadeTransitioner.GetComponentInChildren<Text>().text = "The North pole...";
             StartCoroutine(ChangeLevel(StageOneLevel, StageTwoLevel));
         }
         else if (Stage == "Stage 3")
@@ -125,11 +125,11 @@ public class CutscenesManager : MonoBehaviour {
 
             _newPlayerPosition = StageThreeLevel.transform.position;
 
-            _fadeTransitioner.GetComponentInChildren<Text>().text = "Stage 3";
+            _fadeTransitioner.GetComponentInChildren<Text>().text = "This is it!";
             StartCoroutine(ChangeLevel(StageTwoLevel, StageThreeLevel));
         } else if (Stage == "Ending Scene")
         {
-            _fadeTransitioner.GetComponentInChildren<Text>().text = "Ending Scene";
+            _fadeTransitioner.GetComponentInChildren<Text>().text = "You did it!";
 
             CurrentCutsceneImage.GetComponent<Image>().sprite =
                 EndingImages[CurrentDialogueIndex];

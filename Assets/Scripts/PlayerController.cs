@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
     public float CharacterSpeed = 0.3f;
@@ -119,6 +120,7 @@ public class PlayerController : MonoBehaviour {
                 if (_canUseMelee && Input.GetMouseButtonDown(0))
                 {
                     PlayerController.SoundsSource.PlayOneShot(WeaponSlashSound);
+                    _animator.SetBool("isPlayerAttacking", true);
 
                     Sword.SetActive(true);
                     Sword.GetComponent<BoxCollider2D>().enabled = true;
@@ -160,7 +162,7 @@ public class PlayerController : MonoBehaviour {
         // Game over condition
         if (CharacterHitPoints <= 0)
         {
-            Destroy(gameObject);
+            SceneManager.LoadScene("GameOver");
         }
     }
 
@@ -186,6 +188,7 @@ public class PlayerController : MonoBehaviour {
     private void EnableHittingMelee()
     {
         _canUseMelee = true;
+        _animator.SetBool("isPlayerAttacking", false);
     }
 
     private void HideWeapon()

@@ -17,6 +17,16 @@ public class ButtonsController : MonoBehaviour {
         FadeTransitioner.SetActive(true);
     }
 
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene("StartMenu");
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
     private void Update()
     {
         CurrentHeaderImage.GetComponent<Image>().sprite =

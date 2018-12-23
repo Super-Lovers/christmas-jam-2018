@@ -123,7 +123,7 @@ MonoBehaviour:
   EnemySpeed: 10
   EnemyRunningSpeed: 0.03
   Snowball: {fileID: 1867837802800302, guid: 41a7e2feb601ab444aa4f96f92f3200e, type: 2}
-  EnemyMeleeSprite: {fileID: 21300000, guid: 8fd45e0dd6ee0264f94d363de47db2f1, type: 3}
+  EnemyMeleeSprite: {fileID: 21300000, guid: a1321f5af0f2b3547905adc0a2d6030e, type: 3}
   DamagedSprite: {fileID: 21300000, guid: c1b5a3b71b0088c4eb5e71ed2178c932, type: 3}
   PlayerLayerMask:
     serializedVersion: 2
