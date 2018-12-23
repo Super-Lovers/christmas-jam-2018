@@ -29,6 +29,7 @@ public class StageController : MonoBehaviour {
     public static int CurrentStage = 1;
     public static int CurrentWave = 1;
     public static bool IsEnemyDefeated = false;
+    public static int EnemiesCurrentlyAlive = 0;
 
     private int _secondsLeft = 0;
 
@@ -147,6 +148,7 @@ public class StageController : MonoBehaviour {
                 Instantiate(enemy, spawnPoints[index].transform.position,
                     Quaternion.identity);
                 index++;
+                EnemiesCurrentlyAlive++;
             }
         } else
         {
@@ -159,9 +161,11 @@ public class StageController : MonoBehaviour {
                     Instantiate(enemy, new Vector2(Random.Range(-5f, 5f),
                         enemy.transform.position.y),
                         Quaternion.identity);
+                    EnemiesCurrentlyAlive++;
                 } else
                 {
                     Instantiate(enemy);
+                    EnemiesCurrentlyAlive++;
                 }
             }
         }

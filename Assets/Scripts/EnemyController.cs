@@ -24,6 +24,7 @@ public class EnemyController : MonoBehaviour {
     private bool _canHitPlayer = true;
     private bool _startedBossAttacks = false;
     private ConstantForce2D _constantForce2D;
+    public Sprite BossSprite;
 
     public GameObject[] SplashAttacks;
     public AudioClip WeaponSlashSound;
@@ -97,11 +98,11 @@ public class EnemyController : MonoBehaviour {
             {
                 if (currentPosition.x > -5)
                 {
-                    _rigidbody2d.AddForce(new Vector2(-EnemySpeed, 0));
+                    _rigidbody2d.AddForce(new Vector2(-EnemySpeed * Time.deltaTime, 0));
                 }
                 else
                 {
-                    _rigidbody2d.AddForce(new Vector2(EnemySpeed, 0));
+                    _rigidbody2d.AddForce(new Vector2(EnemySpeed * Time.deltaTime, 0));
                 }
             }
             else
@@ -136,7 +137,16 @@ public class EnemyController : MonoBehaviour {
         else if (_startedBossAttacks == false && gameObject.name == "Boss(Clone)")
         {
             _animator.runtimeAnimatorController = _animatorMelee;
+            _animator.enabled = false;
+            GetComponent<SpriteRenderer>().sprite = BossSprite;
             GetComponent<BoxCollider2D>().size = new Vector2(0.5f, 0.5f);
+
+            Vector2 newScale = transform.localScale;
+            newScale.x = 5;
+            newScale.y = 4;
+            transform.localScale = newScale;
+
+            transform.Rotate(0, 0, 90);
             
             InvokeRepeating("WarnPlayerOfAttack", 3f, 4f);
 
@@ -212,11 +222,12 @@ public class EnemyController : MonoBehaviour {
         _animator.SetBool("isEnemyHit", true);
         EnemyHitPoints--;
 
-            if (EnemyHitPoints <= 0) {
+        if (EnemyHitPoints <= 0) {
+            StageController.EnemiesCurrentlyAlive--;
             //Debug.Log(GameObject.FindGameObjectsWithTag("Enemy").Length);
             // Once all opponents are defeated, the next wave
             // can commence (and the break between each wave).
-            if (GameObject.FindGameObjectsWithTag("Enemy").Length <= 1)
+            if (StageController.EnemiesCurrentlyAlive <= 0)
             {
                 StageController.IsEnemyDefeated = true;
                 StageController.CurrentWave++;
@@ -236,13 +247,14 @@ public class EnemyController : MonoBehaviour {
                     else if (StageController.CurrentStage == 3)
                     {
                         CutscenesManager.Stage = "Stage 3";
-                    } else if (StageController.CurrentStage == 4)
+                    }
+                    else if (StageController.CurrentStage == 4)
                     {
                         CutscenesManager.Stage = "Ending Scene";
                     }
 
-                        GameObject.Find("Cutscenes Manager")
-                        .GetComponent<CutscenesManager>().FadeIn();
+                    GameObject.Find("Cutscenes Manager")
+                    .GetComponent<CutscenesManager>().FadeIn();
                 }
             }
             Destroy(gameObject);

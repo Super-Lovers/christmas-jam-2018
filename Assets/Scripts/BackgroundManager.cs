@@ -16,12 +16,10 @@ public class BackgroundManager : MonoBehaviour {
 
         InvokeRepeating("SpawnCloud", 1f, 1.5f);
 
-        InvokeRepeating("SpawnEnvironmental", 1f, 20f);
-        InvokeRepeating("SpawnEnvironmental", 1f, 20f);
-        InvokeRepeating("SpawnEnvironmental", 1f, 20f);
-        InvokeRepeating("SpawnEnvironmental", 1f, 20f);
-        InvokeRepeating("SpawnEnvironmental", 1f, 20f);
-        InvokeRepeating("SpawnEnvironmental", 1f, 20f);
+        for (int i = 0; i < 6; i++)
+        {
+            InvokeRepeating("SpawnEnvironmental", 15f, 20f);
+        }
     }
 	
     private void SpawnCloud()

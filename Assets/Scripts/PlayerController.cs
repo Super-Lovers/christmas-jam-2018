@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
     public float CharacterSpeed = 0.3f;
-    public int CharacterHitPoints = 3;
+    public static int CharacterHitPoints = 10;
     public string PlayerMode = "Flying";
     public Camera MainCamera;
     
@@ -31,6 +31,11 @@ public class PlayerController : MonoBehaviour {
 
     void Start()
     {
+        CharacterHitPoints = 10;
+        StageController.CurrentStage = 1;
+        StageController.CurrentWave = 1;
+        StageController.EnemiesCurrentlyAlive = 0;
+
         Sword.SetActive(false);
         _rigidbody2d = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -102,11 +107,11 @@ public class PlayerController : MonoBehaviour {
             {
                 if (horizontalMovement != 0)
                 {
-                    _rigidbody2d.AddForce(new Vector2(horizontalMovement * CharacterSpeed, 0));
+                    _rigidbody2d.AddForce(new Vector2(horizontalMovement * CharacterSpeed * Time.deltaTime, 0));
                 }
                 if (verticalMovement != 0)
                 {
-                    _rigidbody2d.AddForce(new Vector2(0, verticalMovement * CharacterSpeed));
+                    _rigidbody2d.AddForce(new Vector2(0, verticalMovement * CharacterSpeed * Time.deltaTime));
                 }
 
                 if (horizontalMovement == 0 && verticalMovement == 0)

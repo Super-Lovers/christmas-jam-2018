@@ -110,6 +110,8 @@ public class CutscenesManager : MonoBehaviour {
             _fadeTransitioner.GetComponentInChildren<Text>().text = "Stage 1";
         } else if (Stage == "Stage 2")
         {
+            PlayerController.CharacterHitPoints = 10;
+
             CurrentCutsceneImage.GetComponent<Image>().sprite =
                 StageTwoImages[CurrentDialogueIndex];
 
@@ -120,6 +122,8 @@ public class CutscenesManager : MonoBehaviour {
         }
         else if (Stage == "Stage 3")
         {
+            PlayerController.CharacterHitPoints = 10;
+
             CurrentCutsceneImage.GetComponent<Image>().sprite =
                 StageThreeImages[CurrentDialogueIndex];
 
@@ -158,7 +162,6 @@ public class CutscenesManager : MonoBehaviour {
 
     private void StopTransition()
     {
-
         _player.transform.position = _newPlayerPosition;
         _animator.SetBool("CanTransition", false);
     }
