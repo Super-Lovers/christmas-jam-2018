@@ -20,8 +20,11 @@ public class StageController : MonoBehaviour {
     public GameObject[] Wave2_3_SpawnPoints;
     public string StageThree = "This is the last stages' waves";
     public GameObject[] Wave3_1;
+    public GameObject[] Wave3_1_SpawnPoints;
     public GameObject[] Wave3_2;
+    public GameObject[] Wave3_2_SpawnPoints;
     public GameObject[] Wave3_3;
+    public GameObject[] Wave3_3_SpawnPoints;
     public static int CurrentStage = 1;
     public static int CurrentWave = 1;
     public static bool IsEnemyDefeated = false;
@@ -51,7 +54,7 @@ public class StageController : MonoBehaviour {
             StageText.text = "Stage " + CurrentStage + "-" + CurrentWave;
         }
 
-        if (CurrentStage == 3 && IsEnemyDefeated && CurrentWave < 2 &&
+        if (CurrentStage == 3 && IsEnemyDefeated && CurrentWave < 4 &&
             CutscenesManager.IsCutsceneOver)
         {
             StartNewWave();
@@ -123,9 +126,9 @@ public class StageController : MonoBehaviour {
         {
             switch (CurrentWave)
             {
-                case 1: SpawnNewWave(Wave3_1, null); break;
-                case 2: SpawnNewWave(Wave3_2, null); break;
-                case 3: SpawnNewWave(Wave3_3, null); break;
+                case 1: SpawnNewWave(Wave3_1, Wave3_1_SpawnPoints); break;
+                case 2: SpawnNewWave(Wave3_2, Wave3_2_SpawnPoints); break;
+                case 3: SpawnNewWave(Wave3_3, Wave3_3_SpawnPoints); break;
             }
         }
     }

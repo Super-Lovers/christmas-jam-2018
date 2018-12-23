@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CutscenesManager : MonoBehaviour {
@@ -15,6 +16,7 @@ public class CutscenesManager : MonoBehaviour {
 
     public string[] StageTwoDialogue;
     public string[] StageThreeDialogue;
+    public string[] EndingDialogue;
     public static int CurrentDialogueIndex;
     public static bool IsCutsceneOver = true;
 
@@ -23,6 +25,8 @@ public class CutscenesManager : MonoBehaviour {
     public GameObject CloudsContainer;
     public GameObject GroundContainer;
     public GameObject BackgroundManager;
+
+    private Vector2 _newPlayerPosition;
 
     private void Start()
     {
@@ -60,6 +64,19 @@ public class CutscenesManager : MonoBehaviour {
 
                     CurrentDialogueIndex++;
                 }
+            } else if (Stage == "Ending Scene")
+            {
+                if (CurrentDialogueIndex == StageThreeDialogue.Length)
+                {
+                    FadeOut();
+                }
+                else
+                {
+                    _fadeTransitioner.GetComponentInChildren<Text>().text =
+                        EndingDialogue[CurrentDialogueIndex];
+
+                    CurrentDialogueIndex++;
+                }
             }
         }
     }
@@ -68,18 +85,26 @@ public class CutscenesManager : MonoBehaviour {
     {
         _animator.SetBool("CanTransition", true);
 
+        _newPlayerPosition = _player.transform.position;
         if (Stage == "Stage 1")
         {
             _fadeTransitioner.GetComponentInChildren<Text>().text = "Stage 1";
         } else if (Stage == "Stage 2")
         {
+            _newPlayerPosition = StageTwoLevel.transform.position;
+
             _fadeTransitioner.GetComponentInChildren<Text>().text = "Stage 2";
             StartCoroutine(ChangeLevel(StageOneLevel, StageTwoLevel));
         }
         else if (Stage == "Stage 3")
         {
+            _newPlayerPosition = StageThreeLevel.transform.position;
+
             _fadeTransitioner.GetComponentInChildren<Text>().text = "Stage 3";
             StartCoroutine(ChangeLevel(StageTwoLevel, StageThreeLevel));
+        } else if (Stage == "Ending Scene")
+        {
+            _fadeTransitioner.GetComponentInChildren<Text>().text = "Ending Scene";
         }
 
         _animator.SetBool("HideTransition", false);
@@ -94,10 +119,16 @@ public class CutscenesManager : MonoBehaviour {
 
         Invoke("StopTransition", 1f);
         IsCutsceneOver = true;
+        if (Stage == "Ending Scene")
+        {
+            SceneManager.LoadScene("StartMenu");
+        }
     }
 
     private void StopTransition()
     {
+
+        _player.transform.position = _newPlayerPosition;
         _animator.SetBool("CanTransition", false);
     }
 
@@ -109,7 +140,10 @@ public class CutscenesManager : MonoBehaviour {
         GroundContainer.SetActive(false);
         BackgroundManager.SetActive(false);
         
-        _player.GetComponent<PlayerController>().UpdatePlayerPerspective();
+        if (Stage != "Stage 3")
+        {
+            _player.GetComponent<PlayerController>().UpdatePlayerPerspective();
+        }
 
         previousLevel.SetActive(false);
         newLevel.SetActive(true);

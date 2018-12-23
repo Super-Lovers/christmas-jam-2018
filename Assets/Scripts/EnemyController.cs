@@ -102,7 +102,8 @@ public class EnemyController : MonoBehaviour {
                     _rigidbody2d.AddForce(new Vector2(-EnemySpeed, 0));
                 }
             }
-        } else if (StageController.CurrentStage == 2)
+        } else if (StageController.CurrentStage == 2 ||
+            StageController.CurrentStage == 3)
         {
             _animator.runtimeAnimatorController = _animatorMelee;
             GetComponent<BoxCollider2D>().size = new Vector2(0.5f, 0.5f);
@@ -148,12 +149,11 @@ public class EnemyController : MonoBehaviour {
 
         if (EnemyHitPoints <= 0)
         {
-            Debug.Log(GameObject.FindGameObjectsWithTag("Enemy").Length);
+            //Debug.Log(GameObject.FindGameObjectsWithTag("Enemy").Length);
             // Once all opponents are defeated, the next wave
             // can commence (and the break between each wave).
             if (GameObject.FindGameObjectsWithTag("Enemy").Length <= 1)
             {
-
                 StageController.IsEnemyDefeated = true;
                 StageController.CurrentWave++;
 
@@ -172,6 +172,9 @@ public class EnemyController : MonoBehaviour {
                     else if (StageController.CurrentStage == 3)
                     {
                         CutscenesManager.Stage = "Stage 3";
+                    } else if (StageController.CurrentStage == 4)
+                    {
+                        CutscenesManager.Stage = "Ending Scene";
                     }
 
                         GameObject.Find("Cutscenes Manager")

@@ -61,10 +61,13 @@ public class PlayerController : MonoBehaviour {
             newCameraPosition.y = transform.position.y;
             MainCamera.transform.position = newCameraPosition;
 
-            Vector2 direction = ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) -
+            if (_canUseMelee)
+            {
+                Vector2 direction = ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) -
                 (Vector2)transform.position).normalized;
 
-            transform.up = direction;
+                transform.up = direction;
+            }
 
             if (CutscenesManager.IsCutsceneOver)
             {
