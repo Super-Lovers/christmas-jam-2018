@@ -91,6 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SnowballPower: 1
   SnowballSpeed: 55
+  SnowballImpactSound: {fileID: 8300000, guid: 699016de972654b4cb8756f5841494bb, type: 3}
 --- !u!212 &212152448113317198
 SpriteRenderer:
   m_ObjectHideFlags: 1

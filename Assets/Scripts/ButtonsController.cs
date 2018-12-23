@@ -6,7 +6,10 @@ using UnityEngine.UI;
 
 public class ButtonsController : MonoBehaviour {
     public GameObject FadeTransitioner;
+    public GameObject CurrentCutsceneImage;
+    public GameObject CurrentHeaderImage;
     public string[] StageOneDialogue;
+    public Sprite[] StageOneImages;
     private int _currentDialogueIndex;
 
     public void StartGame()
@@ -16,6 +19,9 @@ public class ButtonsController : MonoBehaviour {
 
     private void Update()
     {
+        CurrentHeaderImage.GetComponent<Image>().sprite =
+            CurrentCutsceneImage.GetComponent<Image>().sprite;
+
         if (FadeTransitioner.activeInHierarchy) {
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -24,6 +30,9 @@ public class ButtonsController : MonoBehaviour {
                     SceneManager.LoadScene("SampleScene");
                 } else
                 {
+                    CurrentCutsceneImage.GetComponent<Image>().color = new Color(255, 255, 255, 1);
+                    CurrentCutsceneImage.GetComponent<Image>().sprite =
+                        StageOneImages[_currentDialogueIndex];
                     FadeTransitioner.GetComponentInChildren<Text>().text =
                         StageOneDialogue[_currentDialogueIndex];
 

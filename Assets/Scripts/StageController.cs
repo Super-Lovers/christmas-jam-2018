@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class StageController : MonoBehaviour {
     public Text StageText;
     public GameObject WaveNotification;
+    public AudioClip ContinueSound;
     public int SecondsBetweenWaves;
     public string StageOne = "This is the first stages' waves";
     public GameObject[] Wave1_1;
@@ -93,8 +94,11 @@ public class StageController : MonoBehaviour {
         {
             WaveNotification.SetActive(false);
             yield return new WaitForSeconds(0.5f);
+
             WaveNotification.SetActive(true);
+            PlayerController.SoundsSource.PlayOneShot(ContinueSound);
             yield return new WaitForSeconds(0.5f);
+
             WaveNotification.SetActive(false);
         }
     }

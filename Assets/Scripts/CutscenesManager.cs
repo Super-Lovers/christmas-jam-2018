@@ -14,9 +14,14 @@ public class CutscenesManager : MonoBehaviour {
     public GameObject StageTwoLevel;
     public GameObject StageThreeLevel;
 
+    public GameObject CurrentCutsceneImage;
+    public GameObject CurrentHeaderImage;
     public string[] StageTwoDialogue;
+    public Sprite[] StageTwoImages;
     public string[] StageThreeDialogue;
+    public Sprite[] StageThreeImages;
     public string[] EndingDialogue;
+    public Sprite[] EndingImages;
     public static int CurrentDialogueIndex;
     public static bool IsCutsceneOver = true;
 
@@ -36,6 +41,9 @@ public class CutscenesManager : MonoBehaviour {
 
     private void Update()
     {
+        CurrentHeaderImage.GetComponent<Image>().sprite =
+            CurrentCutsceneImage.GetComponent<Image>().sprite;
+
         if (IsCutsceneOver == false && Input.GetKeyDown(KeyCode.Space))
         {
             if (Stage == "Stage 2")
@@ -46,6 +54,9 @@ public class CutscenesManager : MonoBehaviour {
                 }
                 else
                 {
+                    CurrentCutsceneImage.GetComponent<Image>().color = new Color(255, 255, 255, 1);
+                    CurrentCutsceneImage.GetComponent<Image>().sprite =
+                        StageTwoImages[CurrentDialogueIndex];
                     _fadeTransitioner.GetComponentInChildren<Text>().text =
                         StageTwoDialogue[CurrentDialogueIndex];
 
@@ -59,6 +70,9 @@ public class CutscenesManager : MonoBehaviour {
                 }
                 else
                 {
+                    CurrentCutsceneImage.GetComponent<Image>().color = new Color(255, 255, 255, 1);
+                    CurrentCutsceneImage.GetComponent<Image>().sprite =
+                        StageThreeImages[CurrentDialogueIndex];
                     _fadeTransitioner.GetComponentInChildren<Text>().text =
                         StageThreeDialogue[CurrentDialogueIndex];
 
@@ -72,6 +86,9 @@ public class CutscenesManager : MonoBehaviour {
                 }
                 else
                 {
+                    CurrentCutsceneImage.GetComponent<Image>().color = new Color(255, 255, 255, 1);
+                    CurrentCutsceneImage.GetComponent<Image>().sprite =
+                        EndingImages[CurrentDialogueIndex];
                     _fadeTransitioner.GetComponentInChildren<Text>().text =
                         EndingDialogue[CurrentDialogueIndex];
 
@@ -83,6 +100,8 @@ public class CutscenesManager : MonoBehaviour {
 
     public void FadeIn()
     {
+        CurrentHeaderImage.SetActive(true);
+
         _animator.SetBool("CanTransition", true);
 
         _newPlayerPosition = _player.transform.position;
@@ -91,6 +110,9 @@ public class CutscenesManager : MonoBehaviour {
             _fadeTransitioner.GetComponentInChildren<Text>().text = "Stage 1";
         } else if (Stage == "Stage 2")
         {
+            CurrentCutsceneImage.GetComponent<Image>().sprite =
+                StageTwoImages[CurrentDialogueIndex];
+
             _newPlayerPosition = StageTwoLevel.transform.position;
 
             _fadeTransitioner.GetComponentInChildren<Text>().text = "Stage 2";
@@ -98,6 +120,9 @@ public class CutscenesManager : MonoBehaviour {
         }
         else if (Stage == "Stage 3")
         {
+            CurrentCutsceneImage.GetComponent<Image>().sprite =
+                StageThreeImages[CurrentDialogueIndex];
+
             _newPlayerPosition = StageThreeLevel.transform.position;
 
             _fadeTransitioner.GetComponentInChildren<Text>().text = "Stage 3";
@@ -105,15 +130,21 @@ public class CutscenesManager : MonoBehaviour {
         } else if (Stage == "Ending Scene")
         {
             _fadeTransitioner.GetComponentInChildren<Text>().text = "Ending Scene";
+
+            CurrentCutsceneImage.GetComponent<Image>().sprite =
+                EndingImages[CurrentDialogueIndex];
         }
 
         _animator.SetBool("HideTransition", false);
+        PlayerController.MusicSource.Stop();
 
         Invoke("StopTransition", 1f);
     }
 
     public void FadeOut()
     {
+        CurrentHeaderImage.SetActive(false);
+
         _animator.SetBool("CanTransition", true);
         _animator.SetBool("HideTransition", true);
 

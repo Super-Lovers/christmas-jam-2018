@@ -133,6 +133,11 @@ MonoBehaviour:
   - {fileID: 1306879885085098, guid: 0d8825b5829a1de43973a3f3b46b41d6, type: 2}
   - {fileID: 1225869886276018, guid: 8076d5a529b221a46bb4c0b6bc80e7c0, type: 2}
   - {fileID: 1523355295970360, guid: 1c7f888126f601b4b81dda98089e1a1e, type: 2}
+  WeaponSlashSound: {fileID: 8300000, guid: 3434ca9d1882d0f489eb387acc435faf, type: 3}
+  SplashAttackSound: {fileID: 0}
+  EnemyHitSounds:
+  - {fileID: 8300000, guid: 56d5048af05ee7049adc6e4ccaa6d86c, type: 3}
+  - {fileID: 8300000, guid: df4877d74cdd85e4382eb58d01e237c1, type: 3}
 --- !u!212 &212768232814016976
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -167,7 +172,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 04ccf8e7980ae214b842c3c30dceb3f0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

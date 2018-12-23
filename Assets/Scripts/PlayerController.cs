@@ -17,6 +17,14 @@ public class PlayerController : MonoBehaviour {
     private bool _canUseMelee = true;
     private Animator _animator;
     public RuntimeAnimatorController _animatorMelee;
+    private AudioSource[] _audioSources;
+
+    public static AudioSource MusicSource;
+    public static AudioSource SoundsSource;
+    public AudioClip WeaponSlashSound;
+    public AudioClip WindMusic;
+    public AudioClip WalkingMusic;
+    public AudioClip PlayerHitSound;
 
     public GameObject SnowBall;
 
@@ -26,6 +34,21 @@ public class PlayerController : MonoBehaviour {
         _rigidbody2d = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
+        _audioSources = GetComponents<AudioSource>();
+
+        // We split the audiosources so that we have one for
+        // background audio and one for sound clips and effects
+        foreach (AudioSource source in _audioSources)
+        {
+            if (source.clip != null)
+            {
+                MusicSource = source;
+                MusicSource.enabled = false;
+            } else
+            {
+                SoundsSource = source;
+            }
+        }
     }
 
     void Update() {
@@ -34,6 +57,9 @@ public class PlayerController : MonoBehaviour {
 
         if (PlayerMode == "Flying")
         {
+            MusicSource.clip = WindMusic;
+            MusicSource.enabled = true;
+
             if (horizontalMovement != 0)
             {
                 _rigidbody2d.AddForce(new Vector2(horizontalMovement * CharacterSpeed, 0));
@@ -50,6 +76,8 @@ public class PlayerController : MonoBehaviour {
             }
         } else if (PlayerMode == "Grounded")
         {
+            MusicSource.clip = WalkingMusic;
+
             // This lets us update the player's animations using
             // the new stage's player sprites and animator and
             // then we adjust the collider for those new sprites as well.
@@ -80,8 +108,18 @@ public class PlayerController : MonoBehaviour {
                     _rigidbody2d.AddForce(new Vector2(0, verticalMovement * CharacterSpeed));
                 }
 
-                if (_canUseMelee && Input.GetKeyDown(KeyCode.Space))
+                if (horizontalMovement == 0 && verticalMovement == 0)
                 {
+                    MusicSource.enabled = false;
+                } else
+                {
+                    MusicSource.enabled = true;
+                }
+
+                if (_canUseMelee && Input.GetMouseButtonDown(0))
+                {
+                    PlayerController.SoundsSource.PlayOneShot(WeaponSlashSound);
+
                     Sword.SetActive(true);
                     Sword.GetComponent<BoxCollider2D>().enabled = true;
 
@@ -112,6 +150,8 @@ public class PlayerController : MonoBehaviour {
 
     public void DamagePlayer()
     {
+        SoundsSource.PlayOneShot(PlayerHitSound);
+
         //StartCoroutine(FlashPlayer());
         _animator.SetBool("isPlayerHit", true);
         Invoke("StopPlayerHitAnimation", 1f);

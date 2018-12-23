@@ -7,6 +7,7 @@ public class SnowballController : MonoBehaviour {
     [Range(0, 100)]
     public float SnowballSpeed = 55f;
     private Rigidbody2D _rigidbody2d;
+    public AudioClip SnowballImpactSound;
 
 	void Start() {
         _rigidbody2d = GetComponent<Rigidbody2D>();
@@ -35,6 +36,9 @@ public class SnowballController : MonoBehaviour {
         if (transform.CompareTag("Player Snowball") &&
             other.transform.CompareTag("Enemy"))
         {
+            // Playing the sound effects of the snowball once impacted.
+            PlayerController.SoundsSource.PlayOneShot(SnowballImpactSound);
+
             // Makes the enemy flicker damaging effects when hit and lose hit points.
             other.gameObject.GetComponent<EnemyController>().DamageEnemy();
 
@@ -43,6 +47,8 @@ public class SnowballController : MonoBehaviour {
             transform.CompareTag("Boss Snowball")) &&
             other.transform.CompareTag("Player"))
         {
+            PlayerController.SoundsSource.PlayOneShot(SnowballImpactSound);
+
             other.gameObject.GetComponent<PlayerController>().DamagePlayer();
 
             Destroy(gameObject);

@@ -26,6 +26,9 @@ public class EnemyController : MonoBehaviour {
     private ConstantForce2D _constantForce2D;
 
     public GameObject[] SplashAttacks;
+    public AudioClip WeaponSlashSound;
+    public AudioClip SplashAttackSound;
+    public AudioClip[] EnemyHitSounds;
 
     void Start () {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -134,8 +137,9 @@ public class EnemyController : MonoBehaviour {
         {
             _animator.runtimeAnimatorController = _animatorMelee;
             GetComponent<BoxCollider2D>().size = new Vector2(0.5f, 0.5f);
+            
+            InvokeRepeating("WarnPlayerOfAttack", 3f, 4f);
 
-            InvokeRepeating("InitiateBossAttackPattern", 1f, 3f);
             _startedBossAttacks = true;
         } else if (gameObject.name != "Boss(Clone)")
         {
@@ -155,10 +159,28 @@ public class EnemyController : MonoBehaviour {
         }
     }
 
-    private void InitiateBossAttackPattern()
+    private void WarnPlayerOfAttack()
     {
+        PlayerController.SoundsSource.volume = 0.3f;
+        PlayerController.SoundsSource.PlayOneShot(SplashAttackSound);
+
+        StartCoroutine(InitiateBossAttackPattern());
+    }
+
+    private IEnumerator InitiateBossAttackPattern()
+    {
+        yield return new WaitForSeconds(2f);
+        PlayerController.SoundsSource.volume = 1f;
+
         Instantiate(SplashAttacks[Random.Range(0, SplashAttacks.Length)],
             transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(0.3f);
+        Instantiate(SplashAttacks[Random.Range(0, SplashAttacks.Length)],
+            transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(0.3f);
+        Instantiate(SplashAttacks[Random.Range(0, SplashAttacks.Length)],
+            transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(0.3f);
     }
 
     private void EnableShooting()
@@ -184,11 +206,13 @@ public class EnemyController : MonoBehaviour {
 
     public void DamageEnemy()
     {
+        PlayerController.SoundsSource.PlayOneShot(
+            EnemyHitSounds[Random.Range(0, EnemyHitSounds.Length)]);
+
         _animator.SetBool("isEnemyHit", true);
         EnemyHitPoints--;
 
-        if (EnemyHitPoints <= 0)
-        {
+            if (EnemyHitPoints <= 0) {
             //Debug.Log(GameObject.FindGameObjectsWithTag("Enemy").Length);
             // Once all opponents are defeated, the next wave
             // can commence (and the break between each wave).
@@ -239,6 +263,8 @@ public class EnemyController : MonoBehaviour {
             _animator.SetBool("isAttacking", true);
             if (_canHitPlayer)
             {
+                //PlayerController.SoundsSource.PlayOneShot(WeaponSlashSound);
+
                 _player.GetComponent<PlayerController>().DamagePlayer();
 
                 _canHitPlayer = false;
