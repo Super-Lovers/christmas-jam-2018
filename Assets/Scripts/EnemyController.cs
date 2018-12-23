@@ -22,7 +22,10 @@ public class EnemyController : MonoBehaviour {
     private GameObject _player;
     private Animator _animator;
     private bool _canHitPlayer = true;
+    private bool _startedBossAttacks = false;
     private ConstantForce2D _constantForce2D;
+
+    public GameObject[] SplashAttacks;
 
     void Start () {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -34,10 +37,17 @@ public class EnemyController : MonoBehaviour {
         if (StageController.CurrentStage == 1)
         {
             Invoke("StopConstantForce", 4f);
-        } else if (StageController.CurrentStage == 2 ||
+        } else if ((StageController.CurrentStage == 2 &&
+            StageController.CurrentWave != 3) ||
             StageController.CurrentStage == 3)
         {
             StopConstantForce();
+            gameObject.transform.Rotate(0, 0, -90);
+        } else if (StageController.CurrentStage == 2 &&
+            StageController.CurrentWave == 3)
+        {
+            StopConstantForce();
+            gameObject.transform.Rotate(0, 0, 90);
         }
     }
 
@@ -102,23 +112,53 @@ public class EnemyController : MonoBehaviour {
                     _rigidbody2d.AddForce(new Vector2(-EnemySpeed, 0));
                 }
             }
-        } else if (StageController.CurrentStage == 2 ||
-            StageController.CurrentStage == 3)
+        }
+        else if ((StageController.CurrentStage == 2 ||
+          StageController.CurrentStage == 3) && StageController.CurrentWave != 3)
         {
             _animator.runtimeAnimatorController = _animatorMelee;
             GetComponent<BoxCollider2D>().size = new Vector2(0.5f, 0.5f);
-
+            
             if (Vector2.Distance(transform.position, _player.transform.position) < 5)
             {
                 Vector3 dir = _player.transform.position - transform.position;
                 float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-                transform.position = 
+                transform.position =
                     Vector2.MoveTowards(transform.position,
                     _player.transform.position, EnemyRunningSpeed);
             }
         }
+        else if (_startedBossAttacks == false && gameObject.name == "Boss(Clone)")
+        {
+            _animator.runtimeAnimatorController = _animatorMelee;
+            GetComponent<BoxCollider2D>().size = new Vector2(0.5f, 0.5f);
+
+            InvokeRepeating("InitiateBossAttackPattern", 1f, 3f);
+            _startedBossAttacks = true;
+        } else if (gameObject.name != "Boss(Clone)")
+        {
+            _animator.runtimeAnimatorController = _animatorMelee;
+            GetComponent<BoxCollider2D>().size = new Vector2(0.5f, 0.5f);
+            
+            if (Vector2.Distance(transform.position, _player.transform.position) < 5)
+            {
+                Vector3 dir = _player.transform.position - transform.position;
+                float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+                transform.position =
+                    Vector2.MoveTowards(transform.position,
+                    _player.transform.position, EnemyRunningSpeed);
+            }
+        }
+    }
+
+    private void InitiateBossAttackPattern()
+    {
+        Instantiate(SplashAttacks[Random.Range(0, SplashAttacks.Length)],
+            transform.position, Quaternion.identity);
     }
 
     private void EnableShooting()

@@ -24,6 +24,9 @@ public class SnowballController : MonoBehaviour {
         } else if (transform.CompareTag("Player Snowball"))
         {
             _rigidbody2d.AddForce(new Vector2(0, SnowballSpeed));
+        } else if (transform.CompareTag("Boss Snowball"))
+        {
+            _rigidbody2d.AddRelativeForce(Vector2.up * SnowballSpeed);
         }
     }
 
@@ -36,7 +39,8 @@ public class SnowballController : MonoBehaviour {
             other.gameObject.GetComponent<EnemyController>().DamageEnemy();
 
             Destroy(gameObject);
-        } else if (transform.CompareTag("Enemy Snowball") &&
+        } else if ((transform.CompareTag("Enemy Snowball") ||
+            transform.CompareTag("Boss Snowball")) &&
             other.transform.CompareTag("Player"))
         {
             other.gameObject.GetComponent<PlayerController>().DamagePlayer();

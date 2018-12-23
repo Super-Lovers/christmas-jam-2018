@@ -129,6 +129,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _animatorMelee: {fileID: 9100000, guid: e5f573c72d040fc438453c88245249d2, type: 2}
+  SplashAttacks:
+  - {fileID: 1306879885085098, guid: 0d8825b5829a1de43973a3f3b46b41d6, type: 2}
+  - {fileID: 1225869886276018, guid: 8076d5a529b221a46bb4c0b6bc80e7c0, type: 2}
+  - {fileID: 1523355295970360, guid: 1c7f888126f601b4b81dda98089e1a1e, type: 2}
 --- !u!212 &212768232814016976
 SpriteRenderer:
   m_ObjectHideFlags: 1

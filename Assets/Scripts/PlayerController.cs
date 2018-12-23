@@ -85,7 +85,8 @@ public class PlayerController : MonoBehaviour {
                     Sword.SetActive(true);
                     Sword.GetComponent<BoxCollider2D>().enabled = true;
 
-                    Invoke("EnableHittingMelee", 0.1f);
+                    Invoke("EnableHittingMelee", 0.5f);
+                    Invoke("HideWeapon", 0.1f);
 
                     _canUseMelee = false;
                 }
@@ -145,6 +146,10 @@ public class PlayerController : MonoBehaviour {
     private void EnableHittingMelee()
     {
         _canUseMelee = true;
+    }
+
+    private void HideWeapon()
+    {
         Sword.GetComponent<BoxCollider2D>().enabled = false;
         Sword.SetActive(false);
     }

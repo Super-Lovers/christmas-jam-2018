@@ -9,6 +9,7 @@ TagManager:
   - Enemy Snowball
   - Fade Transitioner
   - Sword
+  - Boss Snowball
   layers:
   - Default
   - TransparentFX
