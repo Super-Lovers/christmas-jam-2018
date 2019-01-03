@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
-    public float CharacterSpeed = 0.3f;
+    public float CharacterSpeedField = 0.3f;
+    public float CharacterSpeed = 0;
     public static int CharacterHitPoints = 10;
     public string PlayerMode = "Flying";
     public Camera MainCamera;
@@ -31,6 +32,8 @@ public class PlayerController : MonoBehaviour {
 
     void Start()
     {
+        StageController.IsPlayerSpeedUpdated = false;
+        CharacterSpeed = CharacterSpeedField;
         CharacterHitPoints = 10;
         StageController.CurrentStage = 1;
         StageController.CurrentWave = 1;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour {
     public int EnemyHitPoints = 3;
-    [Range(0, 10)]
+    [Range(0f, 0.1f)]
     public float EnemySpeed = 5f;
     [Range(0, 1)]
     public float EnemyRunningSpeed = 0.03f;
@@ -75,9 +75,13 @@ public class EnemyController : MonoBehaviour {
                 snowball.tag = "Enemy Snowball";
 
                 _canShoot = false;
-                Invoke("EnableShooting", 1f);
+                Invoke("EnableShooting", Random.Range(1.8f, 3f));
             }
 
+            transform.position = Vector2.MoveTowards(transform.position,
+                new Vector2(_player.transform.position.x, transform.position.y), EnemySpeed);
+
+            /*
             if (_canPickNewDirection)
             {
                 if (Random.Range(0, 101) > 50)
@@ -116,6 +120,7 @@ public class EnemyController : MonoBehaviour {
                     _rigidbody2d.AddForce(new Vector2(-EnemySpeed, 0));
                 }
             }
+            */
         }
         else if ((StageController.CurrentStage == 2 ||
           StageController.CurrentStage == 3) && StageController.CurrentWave != 3)

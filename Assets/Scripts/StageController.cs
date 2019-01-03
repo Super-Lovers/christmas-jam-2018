@@ -30,6 +30,7 @@ public class StageController : MonoBehaviour {
     public static int CurrentWave = 1;
     public static bool IsEnemyDefeated = false;
     public static int EnemiesCurrentlyAlive = 0;
+    public static bool IsPlayerSpeedUpdated = false;
 
     private int _secondsLeft = 0;
 
@@ -41,6 +42,12 @@ public class StageController : MonoBehaviour {
 
     private void Update()
     {
+        if (CurrentStage != 1 && IsPlayerSpeedUpdated == false)
+        {
+            Invoke("UpdatePlayerSpeed", 1f);
+            IsPlayerSpeedUpdated = true;
+        }
+
         // We must only go over waves that exist [1-3]
         if (CurrentStage == 1 && IsEnemyDefeated && CurrentWave < 4)
         {
@@ -63,6 +70,11 @@ public class StageController : MonoBehaviour {
             IsEnemyDefeated = false;
             StageText.text = "Last Stage";
         }
+    }
+
+    private void UpdatePlayerSpeed()
+    {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().CharacterSpeed = 130f;
     }
 
     public void StartNewWave()
