@@ -4,12 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
-  - Player Snowball
-  - Enemy Snowball
   - Fade Transitioner
   - Sword
-  - Boss Snowball
+  - entity
+  - Enemy
+  - snowball
   layers:
   - Default
   - TransparentFX
