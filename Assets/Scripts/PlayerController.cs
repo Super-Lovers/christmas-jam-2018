@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
@@ -106,45 +104,45 @@ public class PlayerController : MonoBehaviour {
                 transform.up = direction;
             }
 
-            if (CutscenesManager.IsCutsceneOver)
-            {
-                if (horizontalMovement != 0)
-                {
-                    _rigidbody2d.AddForce(new Vector2(horizontalMovement * CharacterSpeed * Time.deltaTime, 0));
-                }
-                if (verticalMovement != 0)
-                {
-                    _rigidbody2d.AddForce(new Vector2(0, verticalMovement * CharacterSpeed * Time.deltaTime));
-                }
+        //     if (CutscenesManager.IsCutsceneOver)
+        //     {
+        //         if (horizontalMovement != 0)
+        //         {
+        //             _rigidbody2d.AddForce(new Vector2(horizontalMovement * CharacterSpeed * Time.deltaTime, 0));
+        //         }
+        //         if (verticalMovement != 0)
+        //         {
+        //             _rigidbody2d.AddForce(new Vector2(0, verticalMovement * CharacterSpeed * Time.deltaTime));
+        //         }
 
-                if (horizontalMovement == 0 && verticalMovement == 0)
-                {
-                    MusicSource.enabled = false;
-                } else
-                {
-                    MusicSource.enabled = true;
-                }
+        //         if (horizontalMovement == 0 && verticalMovement == 0)
+        //         {
+        //             MusicSource.enabled = false;
+        //         } else
+        //         {
+        //             MusicSource.enabled = true;
+        //         }
 
-                if (_canUseMelee && Input.GetMouseButtonDown(0))
-                {
-                    PlayerController.SoundsSource.PlayOneShot(WeaponSlashSound);
-                    _animator.SetBool("isPlayerAttacking", true);
+        //         if (_canUseMelee && Input.GetMouseButtonDown(0))
+        //         {
+        //             PlayerController.SoundsSource.PlayOneShot(WeaponSlashSound);
+        //             _animator.SetBool("isPlayerAttacking", true);
 
-                    Sword.SetActive(true);
-                    Sword.GetComponent<BoxCollider2D>().enabled = true;
+        //             Sword.SetActive(true);
+        //             Sword.GetComponent<BoxCollider2D>().enabled = true;
 
-                    Invoke("EnableHittingMelee", 0.5f);
-                    Invoke("HideWeapon", 0.1f);
+        //             Invoke("EnableHittingMelee", 0.5f);
+        //             Invoke("HideWeapon", 0.1f);
 
-                    _canUseMelee = false;
-                }
-            }
-        }
+        //             _canUseMelee = false;
+        //         }
+        //     }
+        // }
     }
 
-    private void EnableShooting()
-    {
-        _canShoot = true;
+    // private void EnableShooting()
+    // {
+    //     _canShoot = true;
     }
 
    /* private IEnumerator FlashPlayer()

@@ -55,21 +55,21 @@ public class StageController : MonoBehaviour {
             IsEnemyDefeated = false;
         }
 
-        if (CurrentStage == 2 && IsEnemyDefeated && CurrentWave < 4 &&
-            CutscenesManager.IsCutsceneOver)
-        {
-            StartNewWave();
-            IsEnemyDefeated = false;
-            StageText.text = "Stage " + CurrentStage + "-" + CurrentWave;
-        }
+        // if (CurrentStage == 2 && IsEnemyDefeated && CurrentWave < 4 &&
+        //     CutscenesManager.IsCutsceneOver)
+        // {
+        //     StartNewWave();
+        //     IsEnemyDefeated = false;
+        //     StageText.text = "Stage " + CurrentStage + "-" + CurrentWave;
+        // }
 
-        if (CurrentStage == 3 && IsEnemyDefeated && CurrentWave < 4 &&
-            CutscenesManager.IsCutsceneOver)
-        {
-            StartNewWave();
-            IsEnemyDefeated = false;
-            StageText.text = "Last Stage";
-        }
+        // if (CurrentStage == 3 && IsEnemyDefeated && CurrentWave < 4 &&
+        //     CutscenesManager.IsCutsceneOver)
+        // {
+        //     StartNewWave();
+        //     IsEnemyDefeated = false;
+        //     StageText.text = "Last Stage";
+        // }
     }
 
     private void UpdatePlayerSpeed()

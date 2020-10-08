@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour {
-    public int EnemyHitPoints = 3;
+    public int EnemyHitPoints = 1;
     [Range(0f, 0.1f)]
     public float EnemySpeed = 5f;
     [Range(0, 1)]
@@ -242,24 +242,24 @@ public class EnemyController : MonoBehaviour {
                     StageController.CurrentStage++;
                     StageController.CurrentWave = 1;
 
-                    CutscenesManager.IsCutsceneOver = false;
-                    CutscenesManager.CurrentDialogueIndex = 0;
+                    // CutscenesManager.IsCutsceneOver = false;
+                    // CutscenesManager.CurrentDialogueIndex = 0;
 
-                    if (StageController.CurrentStage == 2)
-                    {
-                        CutscenesManager.Stage = "Stage 2";
-                    }
-                    else if (StageController.CurrentStage == 3)
-                    {
-                        CutscenesManager.Stage = "Stage 3";
-                    }
-                    else if (StageController.CurrentStage == 4)
-                    {
-                        CutscenesManager.Stage = "Ending Scene";
-                    }
+                    // if (StageController.CurrentStage == 2)
+                    // {
+                    //     CutscenesManager.Stage = "Stage 2";
+                    // }
+                    // else if (StageController.CurrentStage == 3)
+                    // {
+                    //     CutscenesManager.Stage = "Stage 3";
+                    // }
+                    // else if (StageController.CurrentStage == 4)
+                    // {
+                    //     CutscenesManager.Stage = "Ending Scene";
+                    // }
 
-                    GameObject.Find("Cutscenes Manager")
-                    .GetComponent<CutscenesManager>().FadeIn();
+                    // GameObject.Find("Cutscenes Manager")
+                    // .GetComponent<CutscenesManager>().FadeIn();
                 }
             }
             Destroy(gameObject);
