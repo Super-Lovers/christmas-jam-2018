@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public abstract class Entity : MonoBehaviour {
-	protected int health = 100;
+	[SerializeField] protected int health = 100;
 	[Range(100, 250)]
 	[SerializeField] protected float movement_speed;
 

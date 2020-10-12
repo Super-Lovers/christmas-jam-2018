@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 95362910162318454}
   - component: {fileID: 114563430735483560}
   - component: {fileID: 2552322563242737524}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: elf_reindeer
   m_TagString: entity
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1671212142702434}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.04, y: 7.46353, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
   m_Children: []
   m_Father: {fileID: 0}
@@ -104,7 +104,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 6
 --- !u!61 &61221520698442544
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -162,6 +162,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32ac85ab30ff82144872f7112654801b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 10
+  movement_speed: 160
+  move_multiplier: 3
 --- !u!114 &2552322563242737524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,3 +179,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   snowball_prefab: {fileID: 1867837802800302, guid: 41a7e2feb601ab444aa4f96f92f3200e,
     type: 3}
+  fire_rate: 0.7

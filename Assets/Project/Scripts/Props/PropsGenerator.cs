@@ -5,14 +5,19 @@ public class PropsGenerator : MonoBehaviour {
 	/// Props definitions and prefabs with the container in which they spawn in.
 	/// </summary>
     [SerializeField] private PropConfig[] props;
-    [SerializeField] private PlayerController player;
 
-	// Use this for initialization
-	private void Start () {
-		InvokeRepeating("Spawn", 1f, 1.5f);
-	}
+	// ********************************************
+	// Dependancies
+	[SerializeField] private StagesModel stages_model;
+	// ********************************************
+
+	private void Start () { InvokeRepeating("Spawn", 1f, 1.5f); }
 	
 	private void Spawn() {
+		// If the stage is no longer the first stage
+		// then stop spawning props in the background.
+		if (stages_model.current_stage.stage_name != "s_1") { this.CancelInvoke(); }
+
 		// Choosing a random prop type
 		var prop_type = Random.Range(0, (int)Prop.number_of_props);
 		var prop = (Prop)prop_type;
@@ -31,7 +36,7 @@ public class PropsGenerator : MonoBehaviour {
 			// A position somewhere in the direction of the player
 			var newPosition = new Vector2(
 				Random.Range(-5, 5),
-				Random.Range(player.transform.position.y + 2, + 4)
+				Random.Range(stages_model.current_stage.stage_player.transform.position.y + 2, + 4)
 			);
 
 			Instantiate(
