@@ -2,11 +2,19 @@ using UnityEngine;
 
 public class Snowball : MonoBehaviour {
 	[SerializeField] private Rigidbody2D rigidbody_2d;
+	[SerializeField] private int damage;
+
+	/// <summary>
+	/// The entity that fired this snowball.
+	/// </summary>
+	private Entity parent_entity;
 
 	private void Start() {
 		// After a few seconds from spawning, the snowball will 
 		// be destroyed from the game to save performance
 		Invoke("DestroySnowball", 3f);
+
+		parent_entity = GetComponentInParent<Entity>();
 	}
 
 	public void CreateSnowball(string direction) {
@@ -18,7 +26,13 @@ public class Snowball : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
-		if (other.CompareTag("entity")) { Destroy(gameObject); }
+		if (other.CompareTag("entity")) {
+			var entity = other.GetComponent<Entity>();
+			if (entity != parent_entity) {
+				other.GetComponent<Entity>().TakeDamage(damage);
+				Destroy(gameObject);
+			}
+		}
 	}
 
 	private void DestroySnowball() {

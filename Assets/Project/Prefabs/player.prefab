@@ -203,7 +203,6 @@ GameObject:
   - component: {fileID: 4230469655902104345}
   - component: {fileID: 4230469655902104348}
   - component: {fileID: 4230469655902104352}
-  - component: {fileID: 4230469655902104354}
   - component: {fileID: 4230469655902104344}
   - component: {fileID: 6912891472697123447}
   m_Layer: 8
@@ -443,14 +442,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!81 &4230469655902104354
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4230469655902104347}
-  m_Enabled: 1
 --- !u!114 &4230469655902104344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,6 +455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1eb7380af149244196b5276fd7f92ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movement_speed: 160
 --- !u!114 &6912891472697123447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -478,3 +470,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   snowball_prefab: {fileID: 1867837802800302, guid: 41a7e2feb601ab444aa4f96f92f3200e,
     type: 3}
+  fire_rate: 0.7

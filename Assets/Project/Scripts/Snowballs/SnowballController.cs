@@ -20,7 +20,7 @@ public class SnowballController : MonoBehaviour {
 	public void FireSnowball(string direction) {
 		if (fire_rate > 0) { return; }
 
-		var snowball = Instantiate(snowball_prefab);
+		var snowball = Instantiate(snowball_prefab, transform);
 		var snowball_script = snowball.GetComponent<Snowball>();
 
 		snowball_script.CreateSnowball(direction);
