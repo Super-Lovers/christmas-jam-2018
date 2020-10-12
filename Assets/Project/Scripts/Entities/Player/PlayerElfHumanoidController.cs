@@ -24,18 +24,18 @@ public class PlayerElfHumanoidController : Entity {
 
 		// ********************************************
 		// Rotating the player with the mouse
-		main_camera.transform.position = 
-				new Vector3(
-					transform.position.x,
-					transform.position.y,
-					main_camera.transform.position.z);
+		main_camera.transform.position = new Vector3(
+				transform.position.x,
+				transform.position.y,
+				main_camera.transform.position.z);
 
 		// The camera has to be separated from the player, because
 		// rotating the player would mean rotating the camera if
 		// they were nested together
 		var mouse_direction = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
 		float angle = Mathf.Atan2(mouse_direction.y, mouse_direction.x) * Mathf.Rad2Deg;
-	 	transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+		// The -90f offsets the sprite origin direction
+	 	transform.rotation = Quaternion.AngleAxis(angle - 90f, Vector3.forward);
 		// ********************************************
 
 		if (!Input.anyKey) { return; }
