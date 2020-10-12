@@ -228,7 +228,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: c2708ccbb0d7bc44da7955406f7cde02, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a1321f5af0f2b3547905adc0a2d6030e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -277,7 +277,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 0.64}
+    oldSize: {x: 0.53, y: 0.65}
     newSize: {x: 0.85, y: 1.6}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -296,7 +296,7 @@ Animator:
   m_GameObject: {fileID: 2005411362090929327}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6c163d80368adaa4c8f4f4c1bfdd7f3d, type: 2}
+  m_Controller: {fileID: 9100000, guid: e5f573c72d040fc438453c88245249d2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -415,4 +415,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   movement_speed: 100
-  attack_radius: 2
+  sword: {fileID: 2005411361356409325}
+  attack_rate: 2

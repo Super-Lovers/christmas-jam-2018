@@ -14,16 +14,17 @@ public class PlayerElfSleighController : Entity {
 
 		if (!Input.anyKey) { return; }
 
-		// ********************************************
-		// Throwing snowballs
-		// ********************************************
+		Attack();
+		Move();
+	}
+
+	public override void Attack() {
 		if (Input.GetKeyDown(KeyCode.Space)) {
 			snowball_controller.FireSnowball("up");
 		}
+	}
 
-		// ********************************************
-		// Movement
-		// ********************************************
+	public override void Move() {
 		var horizontal = Input.GetAxisRaw("Horizontal");
 
 		if (horizontal != 0) {

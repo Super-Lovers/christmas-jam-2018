@@ -37,18 +37,19 @@ public class EnemySleighController : Entity {
 	private void Update() {
 		if (App.Get().settings.is_paused) { return; }
 
-		// ********************************************
-		// Throwing snowballs
-		// ********************************************
+		Attack();
+		Move();
+	}
+
+	public override void Attack() {
 		if (fire_countdown > 0) { fire_countdown -= Time.deltaTime; }
 		else if (fire_countdown <= 0) {
 			snowball_controller.FireSnowball("down");
 			fire_countdown = Random.Range(2, fire_countdown_max);
 		}
+	}
 
-		// ********************************************
-		// Movement
-		// ********************************************
+	public override void Move() {
 		if (moving_countdown > 0) { moving_countdown -= Time.deltaTime; }
 		else if (moving_countdown <= 0) {
 			var direction_rng = Random.Range(0, 100);

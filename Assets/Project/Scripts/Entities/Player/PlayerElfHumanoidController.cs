@@ -33,26 +33,27 @@ public class PlayerElfHumanoidController : Entity {
 		// rotating the player would mean rotating the camera if
 		// they were nested together
 		var mouse_direction = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
-		float angle = Mathf.Atan2(mouse_direction.y, mouse_direction.x) * Mathf.Rad2Deg;
+		var angle = Mathf.Atan2(mouse_direction.y, mouse_direction.x) * Mathf.Rad2Deg;
 		// The -90f offsets the sprite origin direction
 	 	transform.rotation = Quaternion.AngleAxis(angle - 90f, Vector3.forward);
 		// ********************************************
 
 		if (!Input.anyKey) { return; }
 
-		// ********************************************
-		// Candy stick (sword) attack
-		// ********************************************
+		Attack();
+		Move();
+	}
+
+	public override void Attack() {
 		if (Input.GetKeyDown(KeyCode.Space)) {
 			animator.SetBool("is_attacking", true);
 			sword.SetActive(true);
 
 			Invoke("ResetAttack", 0.2f);
 		}
+	}
 
-		// ********************************************
-		// Movement
-		// ********************************************
+	public override void Move() {
 		var horizontal = Input.GetAxisRaw("Horizontal");
 		var vertical = Input.GetAxisRaw("Vertical");
 
