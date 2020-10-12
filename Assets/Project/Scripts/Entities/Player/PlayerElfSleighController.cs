@@ -7,6 +7,8 @@ public class PlayerElfSleighController : Entity {
 	private void Start() {
 		snowball_controller = GetComponent<SnowballController>();
 		rigid_body = GetComponent<Rigidbody2D>();
+
+		Init();
 	}
 
 	private void Update() {

@@ -25,9 +25,7 @@ public class PlayerElfHumanoidController : Entity {
 			gameObject.GetComponent<BoxCollider2D>(),
 			sword.GetComponent<BoxCollider2D>());
 
-		Physics2D.IgnoreCollision(
-			gameObject.GetComponentInChildren<BoxCollider2D>(),
-			sword.GetComponent<BoxCollider2D>());
+		Init();
 	}
 
 	private void Update() {

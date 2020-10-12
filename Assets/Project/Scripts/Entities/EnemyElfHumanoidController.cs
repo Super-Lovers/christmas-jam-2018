@@ -14,6 +14,11 @@ public class EnemyElfHumanoidController : Entity {
 	[SerializeField] private float attack_rate;
 	private float attack_rate_max;
 
+	/// <summary>
+	/// The wave this entity belongs in.
+	/// </summary>
+	private Wave wave;
+
 	private void Start() {
 		// TODO: Find a better solution
 		player = GameObject.FindGameObjectWithTag("Player");
@@ -23,16 +28,16 @@ public class EnemyElfHumanoidController : Entity {
 		radius_collider = GetComponentInChildren<CircleCollider2D>();
 		animator = GetComponent<Animator>();
 
-		// Ignoring the colliders of this object and its attack radius
-		// to avoid the attack hitting it.
-		Physics2D.IgnoreCollision(
-			radius_collider,
-			sword.GetComponent<BoxCollider2D>());
-		
+		// Ignoring the colliders of this object to avoid the attack hitting it.
 		Physics2D.IgnoreCollision(
 			gameObject.GetComponent<BoxCollider2D>(),
 			sword.GetComponent<BoxCollider2D>());
 		// ********************************************
+
+		wave = GetComponentInParent<Wave>();
+		wave.AddToWave(this);
+
+		Init();
 	}
 
 	private void Update() {
@@ -80,5 +85,14 @@ public class EnemyElfHumanoidController : Entity {
 	private void ResetAttack() {
 		animator.SetBool("is_attacking", false);
 		sword.SetActive(false);
+	}
+	
+	public override void TakeDamage(int damage) {
+		if (health - damage <= 0) {
+			wave.RemoveFromWave(this);
+			player.GetComponent<Entity>().Heal(50);
+		}
+
+		base.TakeDamage(damage);
 	}
 }

@@ -32,6 +32,8 @@ public class EnemySleighController : Entity {
 
 		wave = GetComponentInParent<Wave>();
 		wave.AddToWave(this);
+
+		Init();
 	}
 
 	private void Update() {

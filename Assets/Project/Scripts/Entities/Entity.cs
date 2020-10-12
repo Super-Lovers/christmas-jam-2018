@@ -3,16 +3,27 @@ using UnityEngine;
 
 public abstract class Entity : MonoBehaviour {
 	[SerializeField] protected int health = 100;
+	private int max_health;
+
 	[Range(100, 250)]
 	[SerializeField] protected float movement_speed;
 
-	public SpriteRenderer sprite_renderer;
+	private SpriteRenderer sprite_renderer;
+
+	public void Init() {
+		sprite_renderer = GetComponent<SpriteRenderer>();
+		max_health = health;
+	}
 
 	public virtual void Attack() {}
 
 	public virtual void TakeDamage(int damage) {
 		if (health - damage <= 0) { Destroy(this.gameObject); }
 		else { health -= damage; StartCoroutine(Flash()); }
+	}
+
+	public virtual void Heal(int amount) {
+		health = Mathf.Clamp(health + amount, 0, max_health);
 	}
 
 	public virtual void Move() {}
