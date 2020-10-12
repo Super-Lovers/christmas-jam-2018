@@ -8,10 +8,8 @@ public class CutscenesModel : MonoBehaviour {
 
     [SerializeField] private Cutscene[] cutscenes;
 
-    [SerializeField] [Space(10)] private Cutscene current_cutscene;
+    private Cutscene current_cutscene;
     private int current_passage_index = 0;
-
-    private void Start() { PlayCutscene(current_cutscene); }
 
     public void PlayCutscene(Cutscene cutscene) {
         App.Get().settings.is_paused = true;

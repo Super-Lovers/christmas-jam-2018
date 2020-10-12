@@ -4,7 +4,7 @@ public class App : MonoBehaviour {
     private static App Instance;
     public Settings settings;
 
-    private void Start() {
+    private void Awake() {
         if (Instance != null && Instance != this) {
             Destroy(gameObject);
         } else {

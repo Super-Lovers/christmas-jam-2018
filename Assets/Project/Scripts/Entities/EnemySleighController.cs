@@ -4,8 +4,15 @@ public class EnemySleighController : Entity {
 	private SnowballController snowball_controller;
 	private float countdown = 5;
 
+	/// <summary>
+	/// The wave this entity belongs in.
+	/// </summary>
+	private Wave wave;
+
 	private void Start() {
 		snowball_controller = GetComponent<SnowballController>();
+		wave = GetComponentInParent<Wave>();
+		wave.AddToWave(this);
 	}
 
 	private void Update() {
@@ -17,4 +24,10 @@ public class EnemySleighController : Entity {
 			countdown = Random.Range(2, 5);
 		}
 	}
+
+    public override void TakeDamage(int damage)
+    {
+		if (health - damage <= 0) { wave.RemoveFromWave(this); }
+        base.TakeDamage(damage);
+    }
 }
