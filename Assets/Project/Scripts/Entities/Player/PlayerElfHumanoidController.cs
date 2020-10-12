@@ -13,14 +13,27 @@ public class PlayerElfHumanoidController : Entity {
 	/// Melee weapon (candy stick) that inflicts damage to enemy entities
 	/// </summary>
 	[SerializeField] private GameObject sword;
+	[SerializeField] private float attack_rate;
+	private float attack_rate_max;
 
 	private void Start() {
+		attack_rate_max = attack_rate;
 		rigid_body = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
+
+		Physics2D.IgnoreCollision(
+			gameObject.GetComponent<BoxCollider2D>(),
+			sword.GetComponent<BoxCollider2D>());
+
+		Physics2D.IgnoreCollision(
+			gameObject.GetComponentInChildren<BoxCollider2D>(),
+			sword.GetComponent<BoxCollider2D>());
 	}
 
 	private void Update() {
 		if (App.Get().settings.is_paused) { return; }
+
+		if (attack_rate > 0) { attack_rate -= Time.deltaTime; }
 
 		// ********************************************
 		// Rotating the player with the mouse
@@ -45,11 +58,12 @@ public class PlayerElfHumanoidController : Entity {
 	}
 
 	public override void Attack() {
-		if (Input.GetKeyDown(KeyCode.Space)) {
+		if (Input.GetKeyDown(KeyCode.Space) && attack_rate <= 0) {
 			animator.SetBool("is_attacking", true);
 			sword.SetActive(true);
 
 			Invoke("ResetAttack", 0.2f);
+			attack_rate = attack_rate_max;
 		}
 	}
 
@@ -70,6 +84,10 @@ public class PlayerElfHumanoidController : Entity {
 				rigid_body.AddForce(new Vector2(0, -this.movement_speed * Time.deltaTime), ForceMode2D.Force);
 			}
 		}
+	}
+
+	private void OnTriggerEnter2D(Collider2D other) {
+		if (other.CompareTag("Sword")) { TakeDamage(10); }
 	}
 
 	private void ResetAttack() {

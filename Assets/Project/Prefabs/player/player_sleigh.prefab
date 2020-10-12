@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 6912891472697123447}
   m_Layer: 8
   m_Name: player_sleigh
-  m_TagString: entity
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -342,7 +342,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ce2f4994474b2c45acd694e40a2da02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
   movement_speed: 160
+  sprite_renderer: {fileID: 0}
 --- !u!114 &6912891472697123447
 MonoBehaviour:
   m_ObjectHideFlags: 0

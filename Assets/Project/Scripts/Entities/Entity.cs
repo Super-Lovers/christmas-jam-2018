@@ -6,7 +6,7 @@ public abstract class Entity : MonoBehaviour {
 	[Range(100, 250)]
 	[SerializeField] protected float movement_speed;
 
-	private SpriteRenderer sprite_renderer;
+	public SpriteRenderer sprite_renderer;
 
 	public virtual void Attack() {}
 
@@ -21,7 +21,7 @@ public abstract class Entity : MonoBehaviour {
 	/// Gives a red overlay flash to indicate this entity
 	/// has taken damage.
 	/// </summary>
-	private IEnumerator Flash() {
+	public virtual IEnumerator Flash() {
 		for (int i = 0; i < 3; i++) {
 			sprite_renderer.color = new Color(1, 0, 0, 1);
 			yield return new WaitForSeconds(0.1f);

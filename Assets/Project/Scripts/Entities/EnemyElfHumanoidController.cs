@@ -5,7 +5,7 @@ public class EnemyElfHumanoidController : Entity {
 	private CircleCollider2D radius_collider;
 	private Animator animator;
 	
-	private Collider2D player;
+	private GameObject player;
 
 	/// <summary>
 	/// Melee weapon (candy stick) that inflicts damage to enemy entities
@@ -15,18 +15,35 @@ public class EnemyElfHumanoidController : Entity {
 	private float attack_rate_max;
 
 	private void Start() {
+		// TODO: Find a better solution
+		player = GameObject.FindGameObjectWithTag("Player");
 		attack_rate_max = attack_rate;
 
 		rigid_body = GetComponent<Rigidbody2D>();
 		radius_collider = GetComponentInChildren<CircleCollider2D>();
 		animator = GetComponent<Animator>();
+
+		// Ignoring the colliders of this object and its attack radius
+		// to avoid the attack hitting it.
+		Physics2D.IgnoreCollision(
+			radius_collider,
+			sword.GetComponent<BoxCollider2D>());
+		
+		Physics2D.IgnoreCollision(
+			gameObject.GetComponent<BoxCollider2D>(),
+			sword.GetComponent<BoxCollider2D>());
+		// ********************************************
 	}
 
 	private void Update() {
 		if (App.Get().settings.is_paused) { return; }
 
 		Attack();
-		Move();
+		if (Vector2.Distance(
+			transform.position,
+			player.transform.position) < 3f) {
+			Move();
+		}
 	}
 
 	public override void Attack() {
@@ -56,12 +73,8 @@ public class EnemyElfHumanoidController : Entity {
 		}
 	}
 
-	private void OnTriggerStay2D(Collider2D other) {
-		if (other.CompareTag("Player")) { player = other; }
-	}
-
-	private void OnTriggerExit2D(Collider2D other) {
-		if (other.CompareTag("Player")) { player = null; }
+	private void OnTriggerEnter2D(Collider2D other) {
+		if (other.CompareTag("Sword")) { TakeDamage(10); }
 	}
 
 	private void ResetAttack() {
