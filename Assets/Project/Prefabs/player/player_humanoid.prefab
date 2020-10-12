@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3830557389522229454}
   m_Layer: 8
   m_Name: sword
-  m_TagString: Sword
+  m_TagString: sword
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -367,7 +367,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   movement_speed: 160
-  sprite_renderer: {fileID: 3830557390254669197}
   main_camera: {fileID: 0}
   sword: {fileID: 3830557389522229451}
   attack_rate: 1

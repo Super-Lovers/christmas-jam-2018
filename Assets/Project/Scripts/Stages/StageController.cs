@@ -15,6 +15,7 @@ public class StageController : MonoBehaviour {
 	/// When the stage is started, the player will be
 	/// transported to this transform position.
 	/// </summary>
+	[Space(10)]
 	public Transform start_transform;
 
 	/// <summary>
@@ -26,7 +27,13 @@ public class StageController : MonoBehaviour {
 	/// <summary>
 	/// The cutscene to play once the stage is started.
 	/// </summary>
-	public Cutscene cutscene;
+	[Space(10)]
+	public Cutscene enter_cutscene;
+
+	/// <summary>
+	/// The cutscene to play once the stage is completed.
+	/// </summary>
+	public Cutscene exit_cutscene;
 
 	/// <summary>
 	/// The stage to play once this one is completed.
@@ -35,7 +42,9 @@ public class StageController : MonoBehaviour {
 
 	// ********************************************
 	// Dependancies
+	[Header("Dependancies (to inject)")]
 	[SerializeField] private StagesModel stages_model;
+	[SerializeField] private CutscenesModel cutscene_model;
 	// ********************************************
 
 	/// <summary>
@@ -44,7 +53,12 @@ public class StageController : MonoBehaviour {
 	/// </summary>
 	public bool StartNextWave() {
 		if (current_wave >= waves.Length) {
-			stages_model.StartStage(next_stage.gameObject);
+			if (next_stage != null) {
+				stages_model.StartStage(next_stage.gameObject);
+			} else if (exit_cutscene != null) {
+				cutscene_model.PlayCutscene(exit_cutscene);
+			}
+
 			return false;
 		}
 

@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stage_name: defeating_santa
   dialogue: {fileID: 11400000, guid: eed5d89086304e746b95928a26a297ab, type: 2}
+  scene_to_load: start_menu

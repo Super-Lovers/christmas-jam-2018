@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6778510787106693889}
   m_Layer: 5
   m_Name: cutscene_panel
-  m_TagString: Fade Transitioner
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

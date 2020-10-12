@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1867837802800302}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -131,5 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66a0ab3299b89a5438b5fb560024f095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidbody_2d: {fileID: 50176593444409822}
   damage: 10
+  speed: 120
+  time_until_destroy: 5
+  fire_automatically: 0

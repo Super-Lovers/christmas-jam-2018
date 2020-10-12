@@ -4,4 +4,7 @@ using UnityEngine;
 public class Cutscene : ScriptableObject {
 	public string stage_name;
 	public Dialogue dialogue;
+
+	[Header("Assign only if cutscene is final.")]
+	public string scene_to_load;
 }

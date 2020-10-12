@@ -3,6 +3,14 @@ using UnityEngine;
 public class Snowball : MonoBehaviour {
 	private Rigidbody2D rigidbody_2d;
 	[SerializeField] private int damage;
+	[SerializeField] [Range(100, 300)] private int speed;
+	private int speed_multiplier = 100;
+
+	[SerializeField] private float time_until_destroy = 5f;
+
+	[Space(10)]
+	[Header("Fire snowball forward automatically")]
+	[SerializeField] private bool fire_automatically;
 
 	/// <summary>
 	/// The entity that fired this snowball.
@@ -14,23 +22,35 @@ public class Snowball : MonoBehaviour {
 
 		// After a few seconds from spawning, the snowball will 
 		// be destroyed from the game to save performance
-		Invoke("DestroySnowball", 5f);
+		Invoke("DestroySnowball", time_until_destroy);
 
 		parent_entity = GetComponentInParent<Entity>();
 
 		// Ignores the collision between itself and its parent
-		Physics2D.IgnoreCollision(
-			GetComponent<Collider2D>(),
-			parent_entity.GetComponent<Collider2D>());
+		var parent_collider = parent_entity.GetComponent<Collider2D>();
+		if (parent_collider != null) {
+			Physics2D.IgnoreCollision(
+				GetComponent<Collider2D>(),
+				parent_collider);
+		}
 			
 		// Ignores the collision between itself and other snowballs
 		Physics2D.IgnoreLayerCollision(9, 9);
+
+		if (fire_automatically) { 
+			// Ignores the boss collider
+			Physics2D.IgnoreCollision(
+				GetComponent<Collider2D>(),
+				parent_entity.GetComponentInChildren<BoxCollider2D>());
+
+			rigidbody_2d.AddRelativeForce(Vector2.up * speed * Time.deltaTime * speed_multiplier);
+		}
 	}
 
 	public void CreateSnowball(string direction) {
 		switch (direction) {
-			case "up": rigidbody_2d.velocity = new Vector2(0, 200f * Time.deltaTime); break;
-			case "down": rigidbody_2d.velocity = new Vector2(0, -200f * Time.deltaTime); break;
+			case "up": rigidbody_2d.AddForce(new Vector2(0, speed * Time.deltaTime * speed_multiplier)); break;
+			case "down": rigidbody_2d.AddForce(new Vector2(0, -speed * Time.deltaTime * speed_multiplier)); break;
 			default: break;
 		}
 	}
