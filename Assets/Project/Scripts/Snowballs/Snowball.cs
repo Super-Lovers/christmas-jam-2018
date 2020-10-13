@@ -55,11 +55,22 @@ public class Snowball : MonoBehaviour {
 		}
 	}
 
-	private void OnCollisionEnter2D(Collision2D other) {
+	private void OnCollisionStay2D(Collision2D other) {
+		// (temporary) Hack due to collisions not working in build 
+		if (other.gameObject.name == "elf_reindeer") {
+			var entity = other.gameObject.GetComponent<Entity>();
+			if (entity != parent_entity) {
+				entity.TakeDamage(damage);
+
+				CancelInvoke();
+				Destroy(gameObject);
+			}
+		}
+
 		if (other.gameObject.CompareTag("entity") || other.gameObject.CompareTag("Player")) {
 			var entity = other.gameObject.GetComponent<Entity>();
 			if (entity != parent_entity) {
-				other.gameObject.GetComponent<Entity>().TakeDamage(damage);
+				entity.TakeDamage(damage);
 
 				CancelInvoke();
 				Destroy(gameObject);

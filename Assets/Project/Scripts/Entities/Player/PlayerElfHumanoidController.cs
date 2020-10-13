@@ -85,7 +85,8 @@ public class PlayerElfHumanoidController : Entity {
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
-		if (other.CompareTag("sword")) { TakeDamage(10); }
+		// (temporary) Hack due to collisions not working in build 
+		if (other.gameObject.name == "sword") { TakeDamage(10); }
 	}
 
 	private void ResetAttack() {

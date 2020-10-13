@@ -34,15 +34,21 @@ public class PropsGenerator : MonoBehaviour {
 		// Instantiating the chosen chosen a random number of times
 		for (int i = 0; i < count; i++) {
 			// A position somewhere in the direction of the player
+			// outside of his field of view
 			var newPosition = new Vector2(
 				Random.Range(-5, 5),
-				Random.Range(stages_model.current_stage.stage_player.transform.position.y + 2, + 4)
+				Random.Range(
+					stages_model.current_stage.stage_player.transform.position.y + 8,
+					stages_model.current_stage.stage_player.transform.position.y + 12
+				)
 			);
 
 			Instantiate(
 				prop_config.prop_prefabs[Random.Range(0, prop_config.prop_prefabs.Length)],
-				newPosition, Quaternion.identity,
-				this.transform);
+				newPosition,
+				Quaternion.identity,
+				this.transform
+			);
 		}
 	}
 }
