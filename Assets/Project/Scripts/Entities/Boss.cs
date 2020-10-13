@@ -11,6 +11,9 @@ public class Boss : Entity {
 
 	[Space(10)]
 	[SerializeField] private GameObject[] splash_attacks;
+	// Linear, so that the players can learn the pattern
+	// of the boss's attacks
+	private int current_splash_attack_index;
 
 	private void Start() {
 		attack_rate_max = attack_rate;
@@ -33,8 +36,13 @@ public class Boss : Entity {
 
 	private void SpawnSplashAttack() {
 		var splash = Instantiate(
-			splash_attacks[Random.Range(0, splash_attacks.Length)],
+			splash_attacks[current_splash_attack_index],
 			transform);
+
+		current_splash_attack_index++;
+		if (current_splash_attack_index >= splash_attacks.Length) {
+			current_splash_attack_index = 0;
+		}
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {

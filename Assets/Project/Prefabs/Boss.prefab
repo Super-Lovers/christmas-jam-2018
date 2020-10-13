@@ -71,6 +71,8 @@ MonoBehaviour:
   attack_rate: 3
   splash_attacks:
   - {fileID: 1306879885085098, guid: 0d8825b5829a1de43973a3f3b46b41d6, type: 3}
+  - {fileID: 1306879885085098, guid: 3496113d73b385d46b09df6f58cd8eae, type: 3}
+  - {fileID: 1306879885085098, guid: 776ac1e897b2c7443ba215efdef410ea, type: 3}
 --- !u!1 &5516834104757838411
 GameObject:
   m_ObjectHideFlags: 0
