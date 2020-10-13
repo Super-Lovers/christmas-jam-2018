@@ -2,5 +2,6 @@
 	CandyCaneAttack,
 	SnowballImpact,
 	ElfHit,
-	PlayerHit
+	PlayerHit,
+	PlayerMove
 }

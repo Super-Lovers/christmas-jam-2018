@@ -1,9 +1,16 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour {
 	private static AudioManager Instance;
 	public AudioFiles audio_files;
+
+	/// <summary>
+	/// Stores whether or not any of the sound effects
+	/// are ready to be played (repeateable sound effects).
+	/// </summary>
+	private Dictionary<AudioFile, float> sound_timers;
 
 	private void Awake() {
 		if (Instance != null && Instance != this) {
@@ -13,6 +20,11 @@ public class AudioManager : MonoBehaviour {
 			DontDestroyOnLoad(gameObject);
 		}
 	}
+	
+	private void Start() {
+		sound_timers = new Dictionary<AudioFile, float>();
+		sound_timers[AudioFile.PlayerMove] = 0f;
+	}
 
 	public static AudioManager Get() { return Instance; }
 
@@ -21,7 +33,7 @@ public class AudioManager : MonoBehaviour {
 		var obj_audio_source = obj.AddComponent<AudioSource>();
 		obj_audio_source.PlayOneShot(GetAudioFile(file));
 		
-		StartCoroutine(DestroyObj(obj));
+		Destroy(obj, 1f);
 	}
 
 	public UnityEngine.AudioClip GetAudioFile(AudioFile file) {
@@ -32,11 +44,5 @@ public class AudioManager : MonoBehaviour {
 		}
 
 		return null;
-	}
-
-	private IEnumerator DestroyObj(GameObject obj) {
-		yield return new WaitForSeconds(1f);
-		Destroy(obj);
-		yield return new WaitForEndOfFrame();
 	}
 }

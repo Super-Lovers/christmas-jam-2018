@@ -65,6 +65,8 @@ public class EnemyElfHumanoidController : Entity {
 			}
 
 			if (Vector2.Distance(player.transform.position, transform.position) < 2f && attack_rate <= 0) {
+				AudioManager.Get().PlaySound(AudioFile.CandyCaneAttack);
+
 				animator.SetBool("is_attacking", true);
 				sword.SetActive(true);
 

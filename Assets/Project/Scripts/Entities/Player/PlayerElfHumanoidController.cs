@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class PlayerElfHumanoidController : Entity {
 	private Rigidbody2D rigid_body;
 	private Animator animator;
+	private AudioSource audio_source;
 
 	// ********************************************
 	// Dependancies
@@ -19,8 +20,11 @@ public class PlayerElfHumanoidController : Entity {
 
 	private void Start() {
 		attack_rate_max = attack_rate;
+		audio_source = GetComponent<AudioSource>();
 		rigid_body = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
+
+		audio_source.enabled = false;
 
 		Physics2D.IgnoreCollision(
 			gameObject.GetComponent<BoxCollider2D>(),
@@ -50,7 +54,14 @@ public class PlayerElfHumanoidController : Entity {
 	 	transform.rotation = Quaternion.AngleAxis(angle - 90f, Vector3.forward);
 		// ********************************************
 
-		if (!Input.anyKey) { return; }
+		if (!Input.anyKey) { 
+			if (audio_source.enabled) {
+				audio_source.Stop();
+				audio_source.enabled = false;
+			}
+			
+			return;
+		}
 
 		Attack();
 		Move();
@@ -58,6 +69,8 @@ public class PlayerElfHumanoidController : Entity {
 
 	public override void Attack() {
 		if (Input.GetKeyDown(KeyCode.Space) && attack_rate <= 0) {
+			AudioManager.Get().PlaySound(AudioFile.CandyCaneAttack);
+
 			animator.SetBool("is_attacking", true);
 			sword.SetActive(true);
 
@@ -71,6 +84,11 @@ public class PlayerElfHumanoidController : Entity {
 		var vertical = Input.GetAxisRaw("Vertical");
 
 		if (horizontal != 0 || vertical != 0) {
+			if (!audio_source.isPlaying) {
+				audio_source.enabled = true;
+				audio_source.Play();
+			}
+
 			if (horizontal > 0) {
 				rigid_body.AddForce(new Vector2(this.movement_speed * Time.deltaTime, 0), ForceMode2D.Force);
 			} else if (horizontal < 0) {
