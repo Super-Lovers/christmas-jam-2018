@@ -12,7 +12,13 @@ public class CutscenesModel : MonoBehaviour {
 	private Cutscene current_cutscene;
 	private int current_passage_index = 0;
 
+	private float current_volume;
+
 	public void PlayCutscene(Cutscene cutscene) {
+		// Stops the audio from playing during a dualogue
+		current_volume = AudioListener.volume;
+		AudioListener.volume = 0;
+
 		App.Get().settings.is_paused = true;
 
 		// Retrieving the cutscene with that dialogue
@@ -45,6 +51,8 @@ public class CutscenesModel : MonoBehaviour {
 	}
 
 	private void CloseCutscene() {
+		AudioListener.volume = current_volume;
+
 		// If this cutscene loads has a new scene, it will do so
 		// (currently used specifically for the ending cutscene)
 		// ********************************************
