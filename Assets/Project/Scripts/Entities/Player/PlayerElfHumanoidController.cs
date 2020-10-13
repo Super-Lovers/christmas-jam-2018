@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerElfHumanoidController : Entity {
 	private Rigidbody2D rigid_body;
@@ -92,5 +93,11 @@ public class PlayerElfHumanoidController : Entity {
 	private void ResetAttack() {
 		animator.SetBool("is_attacking", false);
 		sword.SetActive(false);
+	}
+
+	public override void TakeDamage(int damage)
+	{
+		if (health - damage <= 0) { SceneManager.LoadScene("game_over"); }
+		base.TakeDamage(damage);
 	}
 }

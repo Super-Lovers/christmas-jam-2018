@@ -48,7 +48,9 @@ public class CutscenesModel : MonoBehaviour {
 		// If this cutscene loads has a new scene, it will do so
 		// (currently used specifically for the ending cutscene)
 		// ********************************************
-		if (current_cutscene.scene_to_load != "") {
+		if (current_cutscene.scene_to_load != "" &&
+			current_cutscene.scene_to_load != string.Empty &&
+			current_cutscene.scene_to_load != null) {
 			SceneManager.LoadScene(current_cutscene.scene_to_load);
 			return;
 		}
