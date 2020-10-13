@@ -62,6 +62,7 @@ public class Snowball : MonoBehaviour {
 			if (entity != parent_entity) {
 				entity.TakeDamage(damage);
 
+				AudioManager.Get().PlaySound(AudioFile.SnowballImpact);
 				CancelInvoke();
 				Destroy(gameObject);
 			}
@@ -72,6 +73,7 @@ public class Snowball : MonoBehaviour {
 			if (entity != parent_entity) {
 				entity.TakeDamage(damage);
 
+				AudioManager.Get().PlaySound(AudioFile.SnowballImpact);
 				CancelInvoke();
 				Destroy(gameObject);
 			}

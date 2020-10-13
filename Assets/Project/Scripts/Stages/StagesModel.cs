@@ -10,7 +10,7 @@ public class StagesModel : MonoBehaviour {
 
 	[HideInInspector] public StageController current_stage;
 
-	private void Start() { StartStage(stages[1]); }
+	private void Start() { StartStage(stages[0]); }
 
 	public void StartStage(GameObject stage) {
 		if (current_stage != null) { current_stage.gameObject.SetActive(false); }
