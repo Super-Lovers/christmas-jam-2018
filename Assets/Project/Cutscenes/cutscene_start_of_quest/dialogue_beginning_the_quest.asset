@@ -15,7 +15,7 @@ MonoBehaviour:
   passages:
   - passage_title: 
     cover: {fileID: 21300000, guid: a4b9c79438354b84aa6ca9f13b5eae0d, type: 3}
-    text: <space> to continue
+    text: Press any key to continue
   - passage_title: 
     cover: {fileID: 21300000, guid: a4b9c79438354b84aa6ca9f13b5eae0d, type: 3}
     text: On christmas, Bobby looked under the tree for his gift..

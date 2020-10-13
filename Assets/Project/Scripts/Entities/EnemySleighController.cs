@@ -70,7 +70,9 @@ public class EnemySleighController : Entity {
 	}
 
 	public override void TakeDamage(int damage) {
-		if (health - damage <= 0) { wave.RemoveFromWave(this); }
+		if (health - damage <= 0) {
+			wave.RemoveFromWave(this);
+		}
 		base.TakeDamage(damage);
 	}
 }

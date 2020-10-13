@@ -55,6 +55,7 @@ public class Boss : Entity {
 			wave.RemoveFromWave(this);
 		}
 
+		AudioManager.Get().PlaySound(AudioFile.SantaHit);
 		base.TakeDamage(damage);
 	}
 }

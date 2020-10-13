@@ -116,6 +116,8 @@ public class PlayerElfHumanoidController : Entity {
 	public override void TakeDamage(int damage)
 	{
 		if (health - damage <= 0) { SceneManager.LoadScene("game_over"); }
+
+		AudioManager.Get().PlaySound(AudioFile.PlayerHit);
 		base.TakeDamage(damage);
 	}
 }

@@ -74,7 +74,7 @@ public class CutscenesModel : MonoBehaviour {
 	}
 
 	private void Update() {
-		if (Input.GetKeyDown(KeyCode.Space) && current_cutscene != null) {
+		if (Input.anyKeyDown && current_cutscene != null) {
 			if (current_passage_index < current_cutscene.dialogue.passages.Length) { LoadPassage(); }
 			else { CloseCutscene(); }
 		}

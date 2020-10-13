@@ -12,6 +12,12 @@ public abstract class Entity : MonoBehaviour {
 
 	public void Init() {
 		sprite_renderer = GetComponent<SpriteRenderer>();
+		// In case the sprite renderer doesn't exist on an entity's container object
+		// it will be retrieved from the child which contains the renderer instead.
+		if (sprite_renderer == null) {
+			sprite_renderer = GetComponentInChildren<SpriteRenderer>(); 
+		}
+
 		max_health = health;
 	}
 

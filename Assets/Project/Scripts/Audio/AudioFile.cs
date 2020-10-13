@@ -3,5 +3,6 @@
 	SnowballImpact,
 	ElfHit,
 	PlayerHit,
-	PlayerMove
+	PlayerMove,
+	SantaHit
 }
