@@ -9,6 +9,8 @@ public class BackgroundController : MonoBehaviour {
 	[SerializeField] [Range(0, 100)] private int speed;
 
 	private void Update() {
+		if (App.Get().settings.is_paused) { return; }
+
 		interactables.transform.position = new Vector3(
 				0,
 				interactables.transform.position.y + (speed * Time.deltaTime),

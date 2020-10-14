@@ -14,6 +14,8 @@ public class PropsGenerator : MonoBehaviour {
 	private void Start () { InvokeRepeating("Spawn", 1f, 1.5f); }
 	
 	private void Spawn() {
+		if (App.Get().settings.is_paused) { return; }
+
 		// If the stage is no longer the first stage
 		// then stop spawning props in the background.
 		if (stages_model.current_stage.stage_name != "s_1") { this.CancelInvoke(); }

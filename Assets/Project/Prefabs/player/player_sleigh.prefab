@@ -275,4 +275,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   snowball_prefab: {fileID: 1867837802800302, guid: 41a7e2feb601ab444aa4f96f92f3200e,
     type: 3}
-  fire_rate: 0.7
+  fire_rate: 1.15

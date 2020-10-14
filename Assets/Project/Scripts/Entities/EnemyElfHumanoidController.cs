@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 
 public class EnemyElfHumanoidController : Entity {
-	private Rigidbody2D rigid_body;
-	private CircleCollider2D radius_collider;
 	private Animator animator;
 	
 	private GameObject player;
@@ -24,8 +22,6 @@ public class EnemyElfHumanoidController : Entity {
 		player = GameObject.FindGameObjectWithTag("Player");
 		attack_rate_max = attack_rate;
 
-		rigid_body = GetComponent<Rigidbody2D>();
-		radius_collider = GetComponentInChildren<CircleCollider2D>();
 		animator = GetComponent<Animator>();
 
 		// Ignoring the colliders of this object to avoid the attack hitting it.
@@ -93,7 +89,7 @@ public class EnemyElfHumanoidController : Entity {
 	public override void TakeDamage(int damage) {
 		if (health - damage <= 0) {
 			wave.RemoveFromWave(this);
-			player.GetComponent<Entity>().Heal(50);
+			player.GetComponent<Entity>().Heal(55);
 		}
 
 		base.TakeDamage(damage);

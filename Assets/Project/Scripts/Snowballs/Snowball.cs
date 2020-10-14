@@ -4,7 +4,7 @@ public class Snowball : MonoBehaviour {
 	private Rigidbody2D rigidbody_2d;
 	[SerializeField] private int damage;
 	[SerializeField] [Range(100, 300)] private int speed;
-	private int speed_multiplier = 100;
+	private int speed_multiplier = 80;
 
 	[SerializeField] private float time_until_destroy = 5f;
 

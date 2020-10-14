@@ -369,4 +369,4 @@ MonoBehaviour:
   movement_speed: 160
   main_camera: {fileID: 0}
   sword: {fileID: 3830557389522229451}
-  attack_rate: 1
+  attack_rate: 2

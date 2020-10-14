@@ -12,9 +12,10 @@ public class EnemySleighController : Entity {
 	/// <summary>
 	/// The time it takes before this entity moves around
 	/// </summary>
-	private float moving_countdown = 3;
+	private float moving_countdown = 2;
 	private float moving_countdown_max;
-	[SerializeField] private float move_multiplier = 3;
+	private float direction_rng;
+	private float initial_push_countdown = 1.5f;
 
 	/// <summary>
 	/// The wave this entity belongs in.
@@ -39,8 +40,22 @@ public class EnemySleighController : Entity {
 	private void Update() {
 		if (App.Get().settings.is_paused) { return; }
 
+		moving_countdown -= Time.deltaTime;
+		initial_push_countdown -= Time.deltaTime;
+
+		PushForward();
 		Attack();
 		Move();
+	}
+
+	private void PushForward() {
+		if (initial_push_countdown > 0) {
+			rigid_body.AddForce(
+				new Vector2(0, -this.movement_speed * Time.deltaTime * 0.2f),
+				ForceMode2D.Impulse);
+		} else {
+			rigid_body.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+		}
 	}
 
 	public override void Attack() {
@@ -54,18 +69,17 @@ public class EnemySleighController : Entity {
 	public override void Move() {
 		if (moving_countdown > 0) { moving_countdown -= Time.deltaTime; }
 		else if (moving_countdown <= 0) {
-			var direction_rng = Random.Range(0, 100);
 			if (direction_rng >= 50) {	// Right
 				rigid_body.AddForce(
-					new Vector2(this.movement_speed * Time.deltaTime * move_multiplier, 0),
+					new Vector2(this.movement_speed * Time.deltaTime * 0.2f, 0),
 					ForceMode2D.Impulse);
 			} else {					// Left
 				rigid_body.AddForce(
-					new Vector2(-this.movement_speed * Time.deltaTime * move_multiplier, 0),
+					new Vector2(-this.movement_speed * Time.deltaTime * 0.2f, 0),
 					ForceMode2D.Impulse);
 			}
 
-			moving_countdown = Random.Range(1, moving_countdown_max);
+			Invoke("StartCountdown", 1f);
 		}
 	}
 
@@ -74,5 +88,10 @@ public class EnemySleighController : Entity {
 			wave.RemoveFromWave(this);
 		}
 		base.TakeDamage(damage);
+	}
+
+	private void StartCountdown() {
+		direction_rng = Random.Range(0, 100);
+		moving_countdown = Random.Range(1, moving_countdown_max);
 	}
 }

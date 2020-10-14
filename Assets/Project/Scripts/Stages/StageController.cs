@@ -54,6 +54,7 @@ public class StageController : MonoBehaviour {
 	public bool StartNextWave() {
 		if (current_wave >= waves.Length) {
 			if (next_stage != null) {
+				CancelInvoke();
 				stages_model.StartStage(next_stage.gameObject);
 			} else if (exit_cutscene != null) {
 				cutscene_model.PlayCutscene(exit_cutscene);
@@ -66,13 +67,20 @@ public class StageController : MonoBehaviour {
 			Debug.Log("Spawned wave <color=\"red\">" + waves[current_wave].wave_name + "</color>.");
 		}
 
+		Invoke("SpawnNextWave", 1f);
+
+		return true;
+	}
+
+	/// <summary>
+	/// Spawns the entities of the next wave.
+	/// </summary>
+	private void SpawnNextWave() {
 		waves[current_wave].gameObject.SetActive(true);
 		foreach (var entity in waves[current_wave].entities) {
 			entity.gameObject.SetActive(true);
 		}
 
 		current_wave++;
-
-		return true;
 	}
 }

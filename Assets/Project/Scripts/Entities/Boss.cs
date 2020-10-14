@@ -35,7 +35,7 @@ public class Boss : Entity {
 	}
 
 	private void SpawnSplashAttack() {
-		var splash = Instantiate(
+		Instantiate(
 			splash_attacks[current_splash_attack_index],
 			transform);
 
